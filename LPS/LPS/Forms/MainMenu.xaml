@@ -76,7 +76,7 @@
                     </MenuItem>
                 </MenuItem>
                 
-                <MenuItem Header="库存管理">
+                <MenuItem Header="库存管理" Click="StorageMenuItem_Click">
                     
                 </MenuItem>
                 

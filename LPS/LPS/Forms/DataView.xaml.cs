@@ -14,18 +14,13 @@ using System.Windows.Shapes;
 namespace LPS.Forms
 {
     /// <summary>
-    /// MainMenu.xaml 的交互逻辑
+    /// DataView.xaml 的交互逻辑
     /// </summary>
-    public partial class MainMenu : Window
+    public partial class DataView : Window
     {
-        public MainMenu()
+        public DataView()
         {
             InitializeComponent();
-        }
-
-        private void StorageMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

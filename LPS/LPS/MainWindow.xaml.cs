@@ -30,8 +30,14 @@ namespace LPS
             //Login login = new Login();
             //login.Show();
 
-            MainMenu menu = new MainMenu();
-            menu.Show();
+            //MainMenu menu = new MainMenu();
+            //menu.Show();
+
+            //DataView dataView = new DataView();
+            //dataView.Show();
+
+            CreateAccount createAccount = new CreateAccount();
+            createAccount.Show();
         }
     }
 }
