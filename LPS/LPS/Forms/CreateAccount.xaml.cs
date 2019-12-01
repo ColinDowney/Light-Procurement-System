@@ -89,7 +89,7 @@ namespace LPS.Forms
                 bool returnVal = false;//判断是否成功执行
                 for (int i = front; i <= end; ++i)
                 {
-                    temp = schoolID + .Substring(2)
+                    temp = schoolID + (enrollYear % 100).ToString()
                         + i.ToString().PadLeft(2, '0');
                     //第 1、2 位标识班级所在的学院，第 3、4 位标识班级所在的年级，第 5、6 位标识班级编号。
 
