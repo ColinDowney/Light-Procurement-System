@@ -16,5 +16,17 @@ namespace LPS.Utility
         {
             Class_id_PK, College_name, Class_contact, Class_contact_phone, Class_contact_email, Class_password
         }
+
+        public enum DataViewParams
+        {
+            AdminAccount, SupplierAccount, StaffAccount, ClassAccount,
+            Inventory, Product_information,
+            Order, Order_to_supplier, Order_to_supplier_information, Order_information,
+            Pick_up_order, Pick_up_order_information,
+            Purchase, Purchase_information,
+            Quatation, Quatation_information,
+            RFQ, RFQ_information,
+            Sales_batch, Sales_order,
+        }
     }
 }

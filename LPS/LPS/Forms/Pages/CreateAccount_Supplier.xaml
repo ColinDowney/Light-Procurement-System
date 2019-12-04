@@ -1,0 +1,43 @@
+﻿<Page x:Class="LPS.Forms.Pages.CreateAccount_Supplier"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LPS.Forms.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CreateAccount_Supplier">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Content="姓名：" HorizontalAlignment="Center"  VerticalAlignment="Center" FontSize="20" />
+            <Label Grid.Row="1" Content="手机：" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" />
+            <Label Grid.Row="2" Content="编号：" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+        </Grid>
+
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <TextBox Grid.Row="0" Name="CreateAccount_NameText" Grid.Column="1" HorizontalAlignment="Center" Height="35.6" TextWrapping="Wrap" VerticalAlignment="Center" Width="142.8" MaxLength="10" MaxLines="1"/>
+            <TextBox Grid.Row="1" Name="CreateAccount_PhoneNumberText" Grid.Column="1" HorizontalAlignment="Center" Height="35.6" TextWrapping="Wrap"  VerticalAlignment="Center" Width="142.8" MaxLength="11" MaxLines="1"/>
+            <TextBox Grid.Row="2" Name="CreateAccount_NOText" Grid.Column="1" HorizontalAlignment="Center" Height="35.6" TextWrapping="Wrap"  VerticalAlignment="Center" Width="142.8" MaxLength="6" MaxLines="1"/>
+            <Button Grid.Row="3" Name="CreateAccount_SupplierAckButton" Click="CreateAccount_SupplierAckButton_Click" Content="确认创建" />
+        </Grid>
+    </Grid>
+</Page>

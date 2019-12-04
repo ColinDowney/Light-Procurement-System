@@ -124,10 +124,10 @@
                     清除
                 </Button>
 
-                <DataGrid Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="4">
+                <DataGrid Name="DataGridLeft"  Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="4">
                 </DataGrid>
 
-                <DataGrid Grid.Column="4" Grid.Row="5" Grid.ColumnSpan="4">
+                <DataGrid Name="DataGridRight" Grid.Column="4" Grid.Row="5" Grid.ColumnSpan="4">
                 </DataGrid>
             </Grid>
         </DockPanel>

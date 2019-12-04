@@ -65,6 +65,18 @@
     <Compile Include="Forms\MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Pages\CreateAccount_Admin.xaml.cs">
+      <DependentUpon>CreateAccount_Admin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Pages\CreateAccount_ClassPage.xaml.cs">
+      <DependentUpon>CreateAccount_ClassPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Pages\CreateAccount_Staff.xaml.cs">
+      <DependentUpon>CreateAccount_Staff.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Pages\CreateAccount_Supplier.xaml.cs">
+      <DependentUpon>CreateAccount_Supplier.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility\ConstantValue.cs" />
     <Compile Include="Utility\Database.cs" />
     <Compile Include="Utility\Tools.cs" />
@@ -81,6 +93,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Forms\MainMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Pages\CreateAccount_Admin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Pages\CreateAccount_ClassPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Pages\CreateAccount_Staff.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Pages\CreateAccount_Supplier.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

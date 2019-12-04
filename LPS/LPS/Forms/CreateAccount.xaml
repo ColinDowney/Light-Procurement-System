@@ -24,7 +24,14 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <Button Grid.Row="0" Content="批量创建班&#xD;&#xA;级账号" Background="#FF56B9CD" Foreground="AliceBlue" FontSize="20"/>
+            <Button Grid.Row="0" Click="ClassButton_Click" Content="批量创建班&#xD;&#xA;级账号" 
+                    Background="#FF56B9CD" Foreground="AliceBlue" FontSize="20"/>
+            <Button Grid.Row="1" Click="StaffButton_Click" Content="创建职工账号" 
+                    Background="#FF38D2F1" Foreground="AliceBlue" FontSize="20"/>
+            <Button Name="Admin_Button"  Grid.Row="2" Click="Admin_Button_Click" Content="创建管理员账号" 
+                    Background="#FF71E7FF" Foreground="AliceBlue" FontSize="20"/>
+            <Button Name="Supplier_Button"  Grid.Row="3" Click="Supplier_Button_Click" Content="创建供货商账号" 
+                    Background="#FF64D8EE" Foreground="AliceBlue" FontSize="20"/>
         </Grid>
 
         <Grid Grid.Column="1">
@@ -34,20 +41,7 @@
                     <GradientStop Color="White"/>
                 </LinearGradientBrush>
             </Grid.Background>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Content="学院：" HorizontalAlignment="Center" Margin="66.432,39.9,44.831,0" VerticalAlignment="Top" FontSize="20" Width="86.637" Height="35.6"/>
-            <Label Grid.Column="0" Content="年级：" HorizontalAlignment="Center" Margin="66.432,100.8,44.831,0" VerticalAlignment="Top" FontSize="20" Width="86.637" Height="35.6"/>
-            <Label Grid.Column="0" Content="班级起始编号：" HorizontalAlignment="Center" Margin="34.032,165,26.8,0" VerticalAlignment="Top" FontSize="20" Width="137.068" Height="35.6"/>
-            <Label Grid.Column="0" Content="班级结束编号：" HorizontalAlignment="Center" Margin="34.032,231,26.8,0" VerticalAlignment="Top" FontSize="20" Width="137.068" Height="35.6"/>
-            <ComboBox Name="CreateAccount_BatchSchoolCombobox"  Grid.Column="1" HorizontalAlignment="Left" Height="35.6" Margin="72.101,39.9,0,0" VerticalAlignment="Top" Width="244.8"/>
-            <ComboBox Name="CreateAccount_BatchGradeCombobox"  Grid.Column="1" HorizontalAlignment="Left" Height="35.6" Margin="72.101,100.8,0,0" VerticalAlignment="Top" Width="244.8" IsEditable="True"/>
-            <TextBox Name="CreateAccount_BatchNoFrontText" Grid.Column="1" HorizontalAlignment="Left" Height="35.6" Margin="72.101,165,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="142.8" MaxLength="3" MaxLines="1"/>
-            <TextBox Name="CreateAccount_BatchNoEndText" Grid.Column="1" HorizontalAlignment="Left" Height="35.6" Margin="72.101,231,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="142.8"/>
-            <Button Name="CreateAccount_BatchAckButton" Click="CreateAccount_BatchAckButton_Click" Content="确认创建" Grid.Column="1" HorizontalAlignment="Left" Height="44.4" Margin="72.101,299.1,0,0" VerticalAlignment="Top" Width="208.8"/>
-
+            <ContentControl Name="Content"/>
         </Grid>
     </Grid>
 </Window>

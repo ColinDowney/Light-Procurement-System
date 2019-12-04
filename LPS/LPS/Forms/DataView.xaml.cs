@@ -18,6 +18,7 @@ namespace LPS.Forms
     /// </summary>
     public partial class DataView : Window
     {
+        
         public DataView()
         {
             InitializeComponent();
