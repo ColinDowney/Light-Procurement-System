@@ -5,13 +5,14 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Security;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace LPS.Utility
 {
     public static class Database
     {
         public static readonly string DefaultConnectionString = "server=LAPTOP-G05DHBB3\\SQLEXPRESS;database=LPS-Database;Integrated Security=true;";//
-        public static string UID = String.Empty;//登陆ID
+        public static string UID = "0123123";//for debug, it should be String.Empty;//登陆ID
         private static SecureString Password = new SecureString();//登陆密码
 
         public static void setUID(string uid)
@@ -117,10 +118,16 @@ namespace LPS.Utility
 
                     command = new SqlCommand(comInsert, connection);
                     var keys = Parameters.Keys;
-                    foreach(string key in keys){
-                        command.Parameters.Add(key, (SqlDbType)Parameters[key][0]);
-                        command.Parameters[key].Value = (string)Parameters[key][1];
+                    SqlDbType stype;
+                    Type type;
+                    foreach (string key in keys)
+                    {
+                        stype = (SqlDbType)Parameters[key][0];
+                        type = Tools.GetType(stype);
+                        command.Parameters.Add(key, stype);
+                        command.Parameters[key].Value = Convert.ChangeType(Parameters[key][1], type);
                     }
+
 
                     //执行添加语句 
                     Return = command.ExecuteNonQuery();
@@ -172,12 +179,12 @@ namespace LPS.Utility
         }
 
         /// <summary>
-        /// 
+        /// 获取数据表
         /// </summary>
         /// <param name="tableName">要填充的表名</param>
         /// <param name="command">执行的查询</param>
         /// <returns></returns>
-        public static DataTable FillDataSet(string tableName, string command)
+        public static DataTable FillDataTable(string tableName, string command)
         {
             try
             {
@@ -197,6 +204,33 @@ namespace LPS.Utility
                 //TODO:添加ex输出信息
                 System.Windows.MessageBox.Show("Sql Error(s) occur: " + ex.ToString());
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// 执行Sql命令(DELETE, UPDATE, ...)
+        /// </summary>
+        /// <param name="Command"></param>
+        /// <returns></returns>
+        public static int ExecuteSqlCommand(string Command)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(
+   connectionString(DefaultConnectionString, UID, Password)))
+                {
+                    connection.Open();
+
+                    SqlCommand command = new SqlCommand(Command, connection);
+                    int re = command.ExecuteNonQuery();
+                    return re;
+                }
+            }
+            catch (SqlException ex)
+            {
+                //TODO:添加ex输出信息
+                System.Windows.MessageBox.Show("Sql Error(s) occur: " + ex.ToString());
+                return -1;
             }
         }
     }

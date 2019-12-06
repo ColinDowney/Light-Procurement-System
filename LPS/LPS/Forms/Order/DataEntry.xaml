@@ -1,0 +1,39 @@
+﻿<Window x:Class="LPS.Forms.Order.DataEntry"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LPS.Forms.Order"
+        mc:Ignorable="d"
+        Title="DataEntry" Height="450" Width="600">
+    <Grid>
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*" />
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <DataGrid Name="OrderDataGrid" Grid.Row="0" Grid.ColumnSpan="2"
+                      IsReadOnly="False" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridComboBoxColumn Width="100" x:Name="Category" 
+                    SelectedValueBinding="{Binding Category, Mode=TwoWay}"  
+                    DisplayMemberPath="{Binding Category}" />
+                    <DataGridTextColumn Binding="{Binding Path=Name}" Width="80"/>
+                    <DataGridTextColumn Binding="{Binding Path=Modle}" Width="80"/>
+                    <DataGridTextColumn Binding="{Binding Path=Num}" Width="50"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="100"
+                   FontSize="20" Content="备注："/>
+            <TextBox Name="OrderNotes" Grid.Row="1" Grid.Column="0" Margin="105.738,0,10,0"/>
+            <Button Name="OrderCreate" Content="创建" Click="OrderCreate_Click" Grid.Row="1" Grid.Column="1" Margin="10,0,10,0"/>
+
+        </Grid>
+    </Grid>
+</Window>

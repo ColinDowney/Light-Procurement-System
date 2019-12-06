@@ -31,7 +31,7 @@ namespace LPS.Forms.Pages
 
             //初始化combobox里面的选项
             string command = "SELECT School_name FROM School_information";
-            _dataTable = Database.FillDataSet("School_name", command);
+            _dataTable = Database.FillDataTable("School_name", command);
             if (_dataTable != null)
             {
                 //加载到combobox

@@ -33,7 +33,7 @@ namespace LPS.Forms.Pages
 
             //初始化combobox里面的选项
             string command = "SELECT School_name FROM School_information";
-            _dataTable = Database.FillDataSet("School_name", command);
+            _dataTable = Database.FillDataTable("School_name", command);
             if (_dataTable != null)
             {
                 //加载到combobox
@@ -87,9 +87,9 @@ namespace LPS.Forms.Pages
                 string temp = String.Empty;
                 bool returnVal = false;//判断是否成功执行
 
-                temp = schoolID + (enrollYear % 100).ToString()
+                temp = "0" + schoolID + (enrollYear % 100).ToString()
                     + CreateAccount_NOText.Text.Trim().PadLeft(2, '0');
-                //第 1、2 位标识班级所在的学院，第 3、4 位标识班级所在的年级，第 5、6 位标识职工编号。
+                //第 2、3 位标识职工所在的学院、部门，第 4、5位标识职工入职年份，第 6、7 位标识职工编号。
 
                 values.Add(temp);
                 values.Add(CreateAccount_NameText.Text.Trim());
