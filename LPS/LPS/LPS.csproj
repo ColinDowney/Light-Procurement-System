@@ -80,6 +80,7 @@
     <Compile Include="Forms\Pages\CreateAccount_Supplier.xaml.cs">
       <DependentUpon>CreateAccount_Supplier.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Manager\Functions.cs" />
     <Compile Include="Utility\ConstantValue.cs" />
     <Compile Include="Utility\Database.cs" />
     <Compile Include="Utility\Tools.cs" />
