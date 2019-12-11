@@ -7,6 +7,10 @@ namespace LPS.Utility
 {
     public static class ConstantValue
     {
+
+            //"未审核", "审核通过","审核不通过","取消","进入销售","完成"
+        
+
         public enum Admin_information
         {
             Admin_id_PK, Admin_name,Admin_password

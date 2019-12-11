@@ -155,7 +155,7 @@ namespace LPS.Utility
         /// </summary>
         /// <param name="TableName">查询的表名</param>
         /// <param name="Command">查询的命令</param>
-        /// <returns></returns>
+        /// <returns>如果没有则返回Null</returns>
         public static object Query(string TableName, string Command)
         {
             try

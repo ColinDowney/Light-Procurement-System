@@ -76,6 +76,7 @@ namespace LPS.Utility
             _SqlDbTypeMap[typeof(float)] = SqlDbType.Real;
             _SqlDbTypeMap[typeof(double)] = SqlDbType.Float;
             _SqlDbTypeMap[typeof(TimeSpan)] = SqlDbType.Time;
+            _SqlDbTypeMap[typeof(bool)] = SqlDbType.Bit;
             /* ... and so on ... */
 
             __typeMap = new Dictionary<SqlDbType, Type>();
@@ -91,6 +92,7 @@ namespace LPS.Utility
             __typeMap[SqlDbType.DateTime] = typeof(DateTime);
             __typeMap[SqlDbType.Float] = typeof(double);
             __typeMap[SqlDbType.Real] = typeof(float);
+            __typeMap[SqlDbType.Bit] = typeof(bool);
         }
 
         // Non-generic argument-based method

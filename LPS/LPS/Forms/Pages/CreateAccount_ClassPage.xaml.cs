@@ -79,7 +79,7 @@ namespace LPS.Forms.Pages
                     schoolName);//查询选中的学院的编号-查询命令
                 string schoolID = ((string)Database.Query("School_information", command)).Trim();//查询选中的学院的编号
 
-                string comInsert = "INSERT INTO Class_information(Class_id_PK, College_name, Class_password)" +
+                string comInsert = "INSERT INTO Customer_information(Customer_id_PK, College_name, Customer_password)" +
                     "values(@ID, @NAME, @PASSWORD)";//插入数据库的命令-（列名）+（参数名-自己起的）
                 SqlDbType[] types = { SqlDbType.VarChar, SqlDbType.VarChar, SqlDbType.VarChar };//数据类型
                 string[] keys = { "@ID", "@NAME", "@PASSWORD" };//上面写的参数名
@@ -90,7 +90,7 @@ namespace LPS.Forms.Pages
                 bool returnVal = false;//判断是否成功执行
                 for (int i = front; i <= end; ++i)
                 {
-                    temp = schoolID + (enrollYear % 100).ToString()
+                    temp = "1" + schoolID + (enrollYear % 100).ToString()
                         + i.ToString().PadLeft(2, '0');
                     //第 1、2 位标识班级所在的学院，第 3、4 位标识班级所在的年级，第 5、6 位标识班级编号。
 
@@ -102,7 +102,7 @@ namespace LPS.Forms.Pages
                         //依次把三个参数放入字典中
                         parameters[keys[j]] = new List<object> { types[j], values[j] };
                     }
-                    returnVal = Database.Insert("Class_information", parameters, comInsert);
+                    returnVal = Database.Insert("Customer_information", parameters, comInsert);
 
                     if (!returnVal)
                         throw new Exception("Error occur when inserting" + temp);

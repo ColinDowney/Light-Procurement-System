@@ -77,7 +77,7 @@ namespace LPS.Forms.Pages
                     schoolName);//查询选中的学院的编号-查询命令
                 string schoolID = ((string)Database.Query("School_information", command)).Trim();//查询选中的学院的编号
 
-                string comInsert = "INSERT INTO Staff_information(Staff_id_PK, Staff_name, Staff_password, Staff_college)" +
+                string comInsert = "INSERT INTO Customer_information(Customer_id_PK, Customer_contact, Customer_password, College_name)" +
                     "values(@ID, @NAME, @PASSWORD, @COLLEGE)";//插入数据库的命令-（列名）+（参数名-自己起的）
                 SqlDbType[] types = { SqlDbType.VarChar, SqlDbType.VarChar, SqlDbType.VarChar, SqlDbType.VarChar };//数据类型
                 string[] keys = { "@ID", "@NAME", "@PASSWORD", "@COLLEGE" };//上面写的参数名
@@ -100,7 +100,7 @@ namespace LPS.Forms.Pages
                     //依次把三个参数放入字典中
                     parameters[keys[j]] = new List<object> { types[j], values[j] };
                 }
-                returnVal = Database.Insert("Staff_information", parameters, comInsert);
+                returnVal = Database.Insert("Customer_information", parameters, comInsert);
 
                 if (!returnVal)
                     throw new Exception("Error occur when inserting" + temp);

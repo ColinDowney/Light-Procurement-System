@@ -1,0 +1,46 @@
+﻿<Window x:Class="LPS.Forms.RFQ.RFQForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LPS.Forms.RFQ"
+        mc:Ignorable="d"
+        Title="RFQForm" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100*" />
+            <ColumnDefinition Width="297*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <Button Name="RFQ_CreateButton" Grid.Row="0" Click="RFQ_CreateButton_Click" Content="创建询价单" 
+                    Background="#FF56B9CD" Foreground="AliceBlue" FontSize="20"/>
+            <Button Name="RFQ_AuditButton" Grid.Row="1" Click="RFQ_AuditButton_Click" Content="审核报价单" 
+                    Background="#FF38D2F1" Foreground="AliceBlue" FontSize="20"/>
+            <Button Name="Admin_Button"  Grid.Row="2" Content="Default" 
+                    Background="#FF71E7FF" Foreground="AliceBlue" FontSize="20"/>
+            <Button Name="Supplier_Button"  Grid.Row="3" Content="Default" 
+                    Background="#FF64D8EE" Foreground="AliceBlue" FontSize="20"/>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="#FF51D1C1" Offset="1"/>
+                    <GradientStop Color="White"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <ContentControl Name="Content"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LPS.Forms.Order"
         mc:Ignorable="d"
-        Title="OrderAudit" Height="450" Width="600">
+        Title="OrderAudit" Height="800" Width="600">
     <Grid>
         <DataGrid Name="AuditDataGrid"
-                      IsReadOnly="False" AutoGenerateColumns="False" Margin="10,28,10,286.6">
+                      IsReadOnly="False" AutoGenerateColumns="False" Margin="10,198.4,10,335.4">
             <DataGrid.ItemContainerStyle>
                 <Style TargetType="DataGridRow">
                     <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
@@ -24,7 +24,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <DataGrid Name="AuditInfoDataGrid"
-                      IsReadOnly="False" AutoGenerateColumns="False" Margin="10,164.8,10,57.4">
+                      IsReadOnly="False" AutoGenerateColumns="False" Margin="10,440,10,89.8">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path=Category}" Width="80" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding Path=Name}" Width="80" IsReadOnly="True"/>
@@ -32,11 +32,20 @@
                 <DataGridTextColumn Binding="{Binding Path=Num}" Width="50" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Name="OrderPass" Click="OrderPass_Click" Content="通过" HorizontalAlignment="Left" Margin="385,368,0,0" VerticalAlignment="Top" Width="76.2" Height="42.4"/>
-        <Button Name="OrderFail" Click="OrderFail_Click" Content="不通过" HorizontalAlignment="Left" Margin="488.2,368,0,0" VerticalAlignment="Top" Width="76.2" Height="42.4"/>
-        <Label Content="发送信息:" FontSize="20" HorizontalAlignment="Left" Margin="10,368,0,0" VerticalAlignment="Center" Height="42.4"/>
-        <TextBox FontSize="17" HorizontalAlignment="Left" Height="37.4" Margin="109.813,373,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="229.587"
+        <Button Name="OrderPass" Click="OrderPass_Click" Content="通过" HorizontalAlignment="Left" Margin="404.2,708,0,0" VerticalAlignment="Top" Width="76.2" Height="42.4"/>
+        <Button Name="OrderFail" Click="OrderFail_Click" Content="不通过" HorizontalAlignment="Left" Margin="507.4,708,0,0" VerticalAlignment="Top" Width="76.2" Height="42.4"/>
+        <Label Content="发送信息:" FontSize="20" HorizontalAlignment="Left" Margin="34.199,713,0,15" VerticalAlignment="Center" Height="42.4"/>
+        <TextBox FontSize="17" HorizontalAlignment="Left" Height="37.4" Margin="129.013,713,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="229.587"
                  MaxLength="30"/>
+        <Label Content="订购单编号" HorizontalAlignment="Left" Height="35.2" Margin="34.199,38,0,0" VerticalAlignment="Top" Width="89.814"/>
+        <Label Content="用户账号" HorizontalAlignment="Left" Height="35.2" Margin="34.199,108.4,0,0" VerticalAlignment="Top" Width="65.412"/>
+        <Label Content="学院" HorizontalAlignment="Left" Height="35.2" Margin="307.799,38,0,0" VerticalAlignment="Top" Width="73.201"/>
+        <Button Content="筛选" HorizontalAlignment="Left" Height="40" Margin="463.4,108.4,0,0" VerticalAlignment="Top" Width="94.4"/>
+        <TextBox Name="OrderAuditNOInput" MaxLength="10" MaxLines="1" HorizontalAlignment="Left" Height="40.2" Margin="129.013,33,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="151.387"/>
+        <TextBox Name="OrderAuditUIDInput" MaxLength="7" MaxLines="1" HorizontalAlignment="Left" Height="40.2" Margin="129.013,108.4,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="151.387"/>
+        <ComboBox Name="OrderAuditSchoolCombobox" HorizontalAlignment="Left" Margin="404.2,38,0,0" VerticalAlignment="Top" Width="153.6" Height="35.2"/>
+        <Button Name="FilterCancelButton" Click="FilterCancelButton_Click"  Content="取消" HorizontalAlignment="Left" Height="40" Margin="463.4,108.4,0,0" VerticalAlignment="Top" Width="94.4"/>
+        <Button Name="FilterButton" Click="FilterButton_Click" Content="筛选" HorizontalAlignment="Left" Height="40" Margin="343.4,108.4,0,0" VerticalAlignment="Top" Width="94.4"/>
 
     </Grid>
 </Window>
