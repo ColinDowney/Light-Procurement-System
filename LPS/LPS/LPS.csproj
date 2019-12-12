@@ -83,6 +83,9 @@
     <Compile Include="Forms\RFQ\CreateRFQ.xaml.cs">
       <DependentUpon>CreateRFQ.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\RFQ\QuotationForm.xaml.cs">
+      <DependentUpon>QuotationForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\RFQ\RFQForm.xaml.cs">
       <DependentUpon>RFQForm.xaml</DependentUpon>
     </Compile>
@@ -127,6 +130,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Forms\RFQ\CreateRFQ.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\RFQ\QuotationForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
