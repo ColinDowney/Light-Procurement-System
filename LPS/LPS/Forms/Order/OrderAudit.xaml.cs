@@ -35,13 +35,13 @@ namespace LPS.Forms.Order
         public class MyItem
         {
             public int NO { get; set; }
-            public string UID { get; set; }
+            public int UID { get; set; }
             public string User { get; set; }
             public string College { get; set; }
             public string Notes { get; set; }
             public bool isSelected { get; set; }
 
-            public MyItem(int nO, string uID, string user, string college, string notes)
+            public MyItem(int nO, int uID, string user, string college, string notes)
             {
                 NO = nO;
                 UID = uID;
@@ -51,7 +51,7 @@ namespace LPS.Forms.Order
                 isSelected = false;
             }
 
-            public void Set(int nO, string uID, string user, string college, string notes)
+            public void Set(int nO, int uID, string user, string college, string notes)
             {
                 NO = nO;
                 UID = uID;
@@ -99,7 +99,7 @@ namespace LPS.Forms.Order
 
             //初始化combobox里面的选项
             string command = "SELECT School_name FROM School_information";
-            DataTable _dataTable = Database.FillDataTable("School_name", command);
+            DataTable _dataTable = Database.FillDataTable(command);
             if (_dataTable != null)
             {
                 //加载到combobox
@@ -131,16 +131,16 @@ namespace LPS.Forms.Order
             try
             {
                 //耗时操作
-                DataTable dataTable = Database.FillDataTable("Order_form", "SELECT * FROM Order_form WHERE Order_form_status='未审核'");
+                DataTable dataTable = Database.FillDataTable("SELECT * FROM Order_form WHERE Order_form_status='未审核'");
                 string command;
                 DataTable tempTable;
                 foreach (DataRow row in dataTable.Rows)
                 {
                     //查询发起订单的用户信息
                     command = string.Format("SELECT Customer_contact, College_name FROM Customer_information WHERE Customer_id_PK='{0}'", row["Customer_id_FK"]);
-                    tempTable = Database.FillDataTable("Customer_information", command);
+                    tempTable = Database.FillDataTable(command);
 
-                    MyItem tempItem = new MyItem((int)row["Order_form_id_PK"], (string)row["Customer_id_FK"], ((string)tempTable.Rows[0].ItemArray[0]).Trim(),
+                    MyItem tempItem = new MyItem((int)row["Order_form_id_PK"], (int)row["Customer_id_FK"], ((string)tempTable.Rows[0].ItemArray[0]).Trim(),
                         ((string)tempTable.Rows[0].ItemArray[1]).Trim(), ((string)row["Order_notes"]).Trim());
                     _cache.Add(tempItem);
                     //_data.Add(tempItem);
@@ -193,7 +193,7 @@ namespace LPS.Forms.Order
                     info = grid.Item as MyItem;
                 }
 
-                DataTable dataTable = Database.FillDataTable("Order_information",
+                DataTable dataTable = Database.FillDataTable(
                     "SELECT Product_category, Product_name, Product_modle, Num_of_product FROM Order_information WHERE Order_form_id_FK=" + info.NO);
                 foreach (DataRow row in dataTable.Rows)
                 {
@@ -248,6 +248,7 @@ namespace LPS.Forms.Order
             catch (Exception ex)
             {
                 Tools.ShowMessageBox(ex.Message);
+                toRemove.Clear();
             }
             finally
             {
@@ -274,6 +275,7 @@ namespace LPS.Forms.Order
             {
                 string no, uid;
                 no = OrderAuditNOInput.Text.Trim();
+                int _uid = -1;
                 int _no = 0;
                 uid = OrderAuditUIDInput.Text.Trim();
                 bool n, u, s, na, ua, sa; ;
@@ -290,6 +292,7 @@ namespace LPS.Forms.Order
                 {
                     if (!Tools.CheckNumberSequence(uid))
                         throw new Exception("UID is invalid.");
+                    _uid = Convert.ToInt32(uid);
                     u = true;
                 }
                 if (OrderAuditSchoolCombobox.SelectedIndex != -1)
@@ -303,7 +306,7 @@ namespace LPS.Forms.Order
                         if (item.NO != _no)
                             na = false;
                     if (u)
-                        if (item.UID != uid)
+                        if (item.UID != _uid)
                             ua = false;
                     if (s)
                         if (item.College != OrderAuditSchoolCombobox.SelectedValue.ToString().Trim())

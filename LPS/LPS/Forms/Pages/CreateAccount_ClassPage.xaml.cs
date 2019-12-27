@@ -31,7 +31,7 @@ namespace LPS.Forms.Pages
 
             //初始化combobox里面的选项
             string command = "SELECT School_name FROM School_information";
-            _dataTable = Database.FillDataTable("School_name", command);
+            _dataTable = Database.FillDataTable(command);
             if (_dataTable != null)
             {
                 //加载到combobox
@@ -77,7 +77,7 @@ namespace LPS.Forms.Pages
                 string schoolName = CreateAccount_BatchSchoolCombobox.SelectedItem.ToString();
                 string command = string.Format("SELECT School_id FROM School_information WHERE School_name = '{0}'",
                     schoolName);//查询选中的学院的编号-查询命令
-                string schoolID = ((string)Database.Query("School_information", command)).Trim();//查询选中的学院的编号
+                string schoolID = ((string)Database.Query(command)).Trim();//查询选中的学院的编号
 
                 string comInsert = "INSERT INTO Customer_information(Customer_id_PK, College_name, Customer_password)" +
                     "values(@ID, @NAME, @PASSWORD)";//插入数据库的命令-（列名）+（参数名-自己起的）
@@ -102,7 +102,7 @@ namespace LPS.Forms.Pages
                         //依次把三个参数放入字典中
                         parameters[keys[j]] = new List<object> { types[j], values[j] };
                     }
-                    returnVal = Database.Insert("Customer_information", parameters, comInsert);
+                    returnVal = Database.Insert(parameters, comInsert);
 
                     if (!returnVal)
                         throw new Exception("Error occur when inserting" + temp);

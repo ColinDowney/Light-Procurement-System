@@ -45,5 +45,11 @@ namespace LPS.Utility
         //<DataGridCheckBoxColumn Width = "30" x:Name="Check" IsReadOnly="False" />
         public static string[] Order_formColName = { "单号", "用户账号", "用户名", "学院", "备注" };
 
+        //        <DataGridTextColumn Binding = "{Binding Path=NO}" Width="80" IsReadOnly="True"/>
+        //<DataGridTextColumn Binding = "{Binding Path=Date}" Width="80" IsReadOnly="True"/>
+        //<DataGridTextColumn Binding = "{Binding Path=Notes}" Width="150" IsReadOnly="True"/>
+        //<DataGridCheckBoxColumn Binding = "{Binding Path=isSelected}" Width="30" x:Name="Check" IsReadOnly="False" />
+        public static string[] Quotation_formColName = { "单号", "日期", "备注", "发送报价单" };
+        public static string[] Quotation_informationColName = { "货品类目", "货品名称", "货品型号", "数量", "单价" };
     }
 }

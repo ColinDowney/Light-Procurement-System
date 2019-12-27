@@ -93,6 +93,7 @@ namespace LPS.Utility
             __typeMap[SqlDbType.Float] = typeof(double);
             __typeMap[SqlDbType.Real] = typeof(float);
             __typeMap[SqlDbType.Bit] = typeof(bool);
+            __typeMap[SqlDbType.Money] = typeof(decimal);
         }
 
         // Non-generic argument-based method

@@ -21,7 +21,7 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Content="姓名：" HorizontalAlignment="Center"  VerticalAlignment="Center" FontSize="20" />
-            <Label Grid.Row="1" Content="编号：" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+            <Label Grid.Row="1" Content="密码：" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
         </Grid>
 
 
@@ -31,8 +31,8 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <TextBox Grid.Row="0" Name="CreateAccount_NameText" Grid.Column="1" HorizontalAlignment="Center" Height="35.6" TextWrapping="Wrap" VerticalAlignment="Center" Width="142.8" MaxLength="15" MaxLines="1"/>
-            <TextBox Grid.Row="1" Name="CreateAccount_NOText" Grid.Column="1" HorizontalAlignment="Center" Height="35.6" TextWrapping="Wrap"  VerticalAlignment="Center" Width="142.8" MaxLength="4" MaxLines="1"/>
+            <TextBox Grid.Row="0" Name="NameText" Grid.Column="1" HorizontalAlignment="Center" Height="35.6" TextWrapping="Wrap" VerticalAlignment="Center" Width="142.8" MaxLength="7" MaxLines="1"/>
+            <PasswordBox Grid.Row="1" Name="PasswordText" Grid.Column="1" HorizontalAlignment="Center" Height="35.6"  VerticalAlignment="Center" Width="142.8" MaxLength="30"/>
             <Button Grid.Row="2" Name="CreateAccount_AdminAckButton" Click="CreateAccount_AdminAckButton_Click" Content="确认创建" />
         </Grid>
     </Grid>

@@ -50,12 +50,24 @@ namespace LPS.Manager
 
             if (NewStatus == "审核通过")
             {
-                command = string.Format("UPDATE Order_information SET Status='{0}' WHERE Order_form_id_FK={1}",
+                command = string.Format("UPDATE Order_information SET Order_information_Status='{0}' WHERE Order_form_id_FK={1}",
     1, Order_id);
                 re = Database.ExecuteSqlCommand(command);
                 if (re <= 0)
                     throw new Exception("Error occur when updating '" + Order_id.ToString() + "' in Order_information form.");
             }
+        }
+
+        /// <summary>
+        /// 更新询价单的状态
+        /// </summary>
+        /// <param name="Order_id">要更新的订单编号Order_id_PK</param>
+        public static void UpdateRFQStatus(int Order_id)
+        {
+            string command = string.Format("UPDATE RFQ SET RFQ_status='等待' WHERE Order_form_id_PK={0}", Order_id);
+            int re = Database.ExecuteSqlCommand(command);
+            if (re <= 0)
+                throw new Exception("Error occur when updating '" + Order_id.ToString() + "' in RFQ form.");
 
         }
 
@@ -65,7 +77,7 @@ namespace LPS.Manager
         /// <param name="toUpdate">对应于要更新的订购单细单的货品</param>
         public static void UpdateOrderInformationStatus(product toUpdate)
         {
-            string command = string.Format("UPDATE Order_information SET Status={0} " +
+            string command = string.Format("UPDATE Order_information SET Order_information_Status={0} " +
                 "WHERE Product_category='{1}' AND Product_name='{2}' AND Product_modle='{3}'",
                 2, toUpdate.Product_category, toUpdate.Product_name, toUpdate.Product_modle);
             int re = Database.ExecuteSqlCommand(command);
@@ -85,7 +97,7 @@ namespace LPS.Manager
             string command = string.Format("SELECT Product_id_PK FROM Product_information " +
                 "WHERE Product_category='{0}' AND Product_name='{1}' AND Product_modle='{2}'",
                 Product_category, Product_name, Product_modle);
-            var re = Database.Query("Product_information", command);
+            var re = Database.Query(command);
             if (re == null)//不应该没有的哈
             {
                 throw new Exception(string.Format("The Product_information in database doesn't have the id of product[name:{0}, category:{1}, modle:{2}]"
@@ -101,7 +113,7 @@ namespace LPS.Manager
         {
             try
             {
-                DataTable Table = Database.FillDataTable("Product_information",
+                DataTable Table = Database.FillDataTable(
                     "SELECT Product_category, Product_name, Product_modle FROM Product_information");
                 List<product> inventorys = new List<product>();
                 foreach(DataRow row in Table.Rows)
@@ -112,14 +124,14 @@ namespace LPS.Manager
 
                 string command = string.Format("SELECT Order_form_id_PK FROM Order_form WHERE Order_form_status='{0}'"
                     , "审核通过");
-                Table = Database.FillDataTable("Order_form", command);
+                Table = Database.FillDataTable(command);
                 DataTable infoTable;
                 List<product> toInsert = new List<product>();
                 product tempro;
                 foreach (DataRow row in Table.Rows)
                 {
                     command = string.Format("SELECT * FROM Order_information WHERE Order_form_id_FK={0}", row["Order_form_id_PK"]);
-                    infoTable = Database.FillDataTable("Order_information", command);
+                    infoTable = Database.FillDataTable(command);
                     foreach(DataRow infoRow in infoTable.Rows)
                     {
                         if (!inventorys.Exists(x => (x.Product_category == (string)infoRow["Product_category"] &&
@@ -148,15 +160,15 @@ namespace LPS.Manager
         {
             try
             {
-                DataTable orderTable = Database.FillDataTable("Order_form", "SELECT * FROM Order_form WHERE Order_form_status='审核通过'");
+                DataTable orderTable = Database.FillDataTable("SELECT * FROM Order_form WHERE Order_form_status='审核通过'");
                 string command;
                 DataTable infoTable;
                 List<product> backList = new List<product>();
                 foreach (DataRow row in orderTable.Rows)
                 {
                     //对于该审核通过的订购单里面每一项具体的订购进行处理
-                    command = string.Format("SELECT * FROM Order_information WHERE Order_form_id_FK={0} AND Status=1", row["Order_form_id_PK"]);
-                    infoTable = Database.FillDataTable("Order_information", command);
+                    command = string.Format("SELECT * FROM Order_information WHERE Order_form_id_FK={0} AND Order_information_Status=1", row["Order_form_id_PK"]);
+                    infoTable = Database.FillDataTable(command);
                     foreach(DataRow infoRow in infoTable.Rows)
                     {
                         //对于每一项货品，在货物表中查找其编号
@@ -217,13 +229,13 @@ namespace LPS.Manager
                     //依次把三个参数放入字典中
                     parameters[keys[j]] = new List<object> { types[j], values[j] };
                 }
-                returnVal = Database.Insert(tableName, parameters, comInsert);
+                returnVal = Database.Insert(parameters, comInsert);
                 //这里设计有问题哦 既然之前handle了exception为什么这里还要throw哦
                 if (!returnVal)
                     throw new Exception("Error occur when inserting the RFQ form.");
 
                 //获取这条记录在RFQ的编号
-                int rfqID = (int)Database.Query(tableName, string.Format("SELECT MAX(RFQ_id_PK) from {0}",
+                int rfqID = (int)Database.Query(string.Format("SELECT MAX(RFQ_id_PK) from {0}",
                     tableName));
 
                 //插入询价细单
@@ -251,7 +263,7 @@ namespace LPS.Manager
                         //依次把三个参数放入字典中
                         iparameters[ikeys[j]] = new List<object> { itypes[j], values[j] };
                     }
-                    returnVal = Database.Insert(tableName, iparameters, comInsert);
+                    returnVal = Database.Insert(iparameters, comInsert);
                     //这里设计有问题哦 既然之前handle了exception为什么这里还要throw哦
                     if (!returnVal)
                         throw new Exception("Error occur when inserting the RFQ_information form.");
@@ -299,7 +311,7 @@ namespace LPS.Manager
                         //依次把三个参数放入字典中
                         parameters[keys[j]] = new List<object> { types[j], values[j] };
                     }
-                    returnVal = Database.Insert(tableName, parameters, comInsert);
+                    returnVal = Database.Insert(parameters, comInsert);
                     //这里设计有问题哦 既然之前handle了exception为什么这里还要throw哦
                     if (!returnVal)
                         throw new Exception("Error occur when inserting the Backorder_information form.");
@@ -345,7 +357,7 @@ namespace LPS.Manager
                         //依次把三个参数放入字典中
                         parameters[keys[j]] = new List<object> { types[j], values[j] };
                     }
-                    returnVal = Database.Insert(tableName, parameters, comInsert);
+                    returnVal = Database.Insert(parameters, comInsert);
 
                     if (!returnVal)
                         throw new Exception("Error occur when inserting Product_information.");

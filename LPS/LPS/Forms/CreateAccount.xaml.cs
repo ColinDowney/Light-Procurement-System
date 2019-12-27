@@ -9,8 +9,9 @@ namespace LPS.Forms
     /// </summary>
     public partial class CreateAccount : Window
     {
-        private Page _classPage;
-        private Page _staffPage;
+        private Page _customerPage;
+        //private Page _classPage;
+        //private Page _staffPage;
         private Page _supplierPage;
         private Page _adminPage;
 
@@ -21,20 +22,30 @@ namespace LPS.Forms
 
         private void ClassButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_classPage == null)
+            if (_customerPage == null)
             {
-                _classPage = new CreateAccount_ClassPage();
+                _customerPage = new CreateAccount_Customer();
             }
-            Content.Content = new Frame() { Content = _classPage };
+            Content.Content = new Frame() { Content = _customerPage };
+            //if (_classPage == null)
+            //{
+            //    _classPage = new CreateAccount_ClassPage();
+            //}
+            //Content.Content = new Frame() { Content = _classPage };
         }
 
         private void StaffButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_staffPage == null)
+            if (_customerPage == null)
             {
-                _staffPage = new CreateAccount_Staff();
+                _customerPage = new CreateAccount_Customer();
             }
-            Content.Content = new Frame() { Content = _staffPage };
+            Content.Content = new Frame() { Content = _customerPage };
+            //if (_staffPage == null)
+            //{
+            //    _staffPage = new CreateAccount_Staff();
+            //}
+            //Content.Content = new Frame() { Content = _staffPage };
         }
 
         private void Supplier_Button_Click(object sender, RoutedEventArgs e)

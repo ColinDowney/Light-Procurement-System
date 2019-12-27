@@ -72,7 +72,7 @@ namespace LPS.Forms.RFQ
 
             //初始化combobox里面的选项
             string command = "SELECT DISTINCT Product_category FROM Product_information";
-            DataTable _dataTable = Database.FillDataTable("Product_information", command);
+            DataTable _dataTable = Database.FillDataTable(command);
             if (_dataTable != null)
             {
                 //加载到combobox
@@ -148,7 +148,7 @@ namespace LPS.Forms.RFQ
                     item = i as MyItem;
                     if (item.isSelected)
                     {
-                        products.Add(new product(item.ID, item.Num, item.Name, item.Category, item.Modle));
+                        products.Add(new product(item.ID, item.Num, item.Name.Trim(), item.Category.Trim(), item.Modle.Trim()));
                         toRemove.Add(item);
                     }
                 }

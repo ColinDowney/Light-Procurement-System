@@ -74,6 +74,9 @@
     <Compile Include="Forms\Pages\CreateAccount_ClassPage.xaml.cs">
       <DependentUpon>CreateAccount_ClassPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Pages\CreateAccount_Customer.xaml.cs">
+      <DependentUpon>CreateAccount_Customer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Pages\CreateAccount_Staff.xaml.cs">
       <DependentUpon>CreateAccount_Staff.xaml</DependentUpon>
     </Compile>
@@ -118,6 +121,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Forms\Pages\CreateAccount_ClassPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Pages\CreateAccount_Customer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

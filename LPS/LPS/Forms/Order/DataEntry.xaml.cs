@@ -51,7 +51,7 @@ namespace LPS.Forms.Order
             //创建订购批次单
             //Customer_id_FK, Create_date, Order_notes, Order_form_status
             DateTime dateTime = System.DateTime.Now;
-            string customerID = Database.UID;
+            int customerID = Database.UNO;
             string orderNotes = OrderNotes.Text.Trim();
 
             try
@@ -78,7 +78,7 @@ namespace LPS.Forms.Order
                     //依次把三个参数放入字典中
                     parameters[keys[j]] = new List<object> { types[j], values[j] };
                  }
-                returnVal = Database.Insert(tableName, parameters, comInsert);
+                returnVal = Database.Insert(parameters, comInsert);
 
                 if (!returnVal)
                     throw new Exception("Error occur when create the order form.");
@@ -91,7 +91,7 @@ namespace LPS.Forms.Order
                 //查询之前建立的订购批次单的编号
                 string command = string.Format("SELECT MAX(Order_form_id_PK) from {0}",
                     tableName);
-                int orderID = (int)Database.Query(tableName, command);
+                int orderID = (int)Database.Query(command);
 
                 tableName = "Order_information";
                 comInsert = "INSERT INTO " +
@@ -115,7 +115,7 @@ namespace LPS.Forms.Order
                         //依次把参数放入字典中
                         parameters[ikeys[j]] = new List<object> { itypes[j], values[j] };
                     }
-                    returnVal = Database.Insert(tableName, parameters, comInsert);
+                    returnVal = Database.Insert(parameters, comInsert);
 
                     if (!returnVal)
                         throw new Exception(string.Format("Error occur when create the order information form of order form {0}.", orderID));

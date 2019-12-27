@@ -32,29 +32,28 @@ namespace LPS.Forms.Pages
             {
                 if (Tools.CheckNumberSequence(CreateAccount_PhoneNumberText.Text) == false)
                     throw new Exception("Unvalid phone number.");
-                if (Tools.CheckNumberSequence(CreateAccount_NOText.Text) == false)
-                    throw new Exception("Unvalid supplier NO.");
+                if (Tools.CheckNumberSequence(CreateAccount_PasswordText.Text) == false)
+                    throw new Exception("Unvalid supplier password.");
 
-                string comInsert = "INSERT INTO Supplier_information(Supplier_id_PK, Supplier_name, Supplier_phone, Supplier_password)" +
-                    "values(@ID, @NAME, @PHONE, @PASSWORD)";//插入数据库的命令-（列名）+（参数名-自己起的）
-                SqlDbType[] types = { SqlDbType.VarChar, SqlDbType.VarChar, SqlDbType.VarChar, SqlDbType.VarChar };//数据类型
-                string[] keys = { "@ID", "@NAME", "@PHONE", "@PASSWORD" };//上面写的参数名
+                string comInsert = "INSERT INTO Supplier_information(Supplier_name, Supplier_phone, Supplier_password)" +
+                    "values(@NAME, @PHONE, @PASSWORD)";//插入数据库的命令-（列名）+（参数名-自己起的）
+                SqlDbType[] types = { SqlDbType.VarChar, SqlDbType.VarChar, SqlDbType.VarChar };//数据类型
+                string[] keys = {"@NAME", "@PHONE", "@PASSWORD" };//上面写的参数名
 
                 List<string> values = new List<string>();//用来临时存参数的
                 Dictionary<string, List<object>> parameters = new Dictionary<string, List<object>>();//用来传参的
                 string temp = String.Empty;
                 bool returnVal = false;//判断是否成功执行
 
-                values.Add(CreateAccount_NOText.Text.Trim());
                 values.Add(CreateAccount_NameText.Text.Trim());
                 values.Add(CreateAccount_PhoneNumberText.Text.Trim());
-                values.Add(CreateAccount_NOText.Text.Trim());
+                values.Add(CreateAccount_PasswordText.Text.Trim());
                 for (int j = 0; j < values.Count; ++j)
                 {
                     //依次把三个参数放入字典中
                     parameters[keys[j]] = new List<object> { types[j], values[j] };
                 }
-                returnVal = Database.Insert("Supplier_information", parameters, comInsert);
+                returnVal = Database.Insert(parameters, comInsert);
 
                 if (!returnVal)
                     throw new Exception("Error occur when inserting" + temp);
@@ -76,7 +75,7 @@ namespace LPS.Forms.Pages
         private void clearInputField()
         {
             CreateAccount_NameText.Text = String.Empty;
-            CreateAccount_NOText.Text = String.Empty;
+            CreateAccount_PasswordText.Text = String.Empty;
             CreateAccount_PhoneNumberText.Text = String.Empty;
         }
     }

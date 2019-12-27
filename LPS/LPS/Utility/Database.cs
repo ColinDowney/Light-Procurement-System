@@ -13,6 +13,7 @@ namespace LPS.Utility
     {
         public static readonly string DefaultConnectionString = "server=LAPTOP-G05DHBB3\\SQLEXPRESS;database=LPS-Database;Integrated Security=true;";//
         public static string UID = "0123123";//for debug, it should be String.Empty;//登陆ID
+        public static int UNO = 1;
         private static SecureString Password = new SecureString();//登陆密码
 
         public static void setUID(string uid)
@@ -97,18 +98,17 @@ namespace LPS.Utility
         /// <summary>
         /// 向表名为TableName的表插入记录
         /// </summary>
-        /// <param name="TableName">要插入的表名</param>
         /// <param name="Parameters">key为参数名（不可太长）@CODE，List的第一个元素是参数类型SqlDbType，第二个元素是参数的值Value</param>
         /// <returns>执行是否成功</returns>
-        public static bool Insert(string TableName, Dictionary<string,List<Object>> Parameters, string Command)
+        public static bool Insert(Dictionary<string,List<Object>> Parameters, string Command)
         {
             //插入命令 
             //string comInsert = "insert into Class (code, className, campus, school, grade, contact, phoneNumber, email) " +
             //    "values(@CODE, @CLASSNAME, @CAMPUS, @SCHOOL, @GRADE, @CONTACT, @PHONE, @EMAIL)";
             string comInsert = Command;
             int Return = 0;
-            try
-            {
+            //try
+            //{
                 using (SqlConnection connection = new SqlConnection(
    connectionString(DefaultConnectionString, UID, Password)))
                 {
@@ -135,28 +135,27 @@ namespace LPS.Utility
                     if (Return <= 0)
                         throw new Exception("No row is updated. Maybe the Sql go wrong.");
                 }
-            }
-            catch (SqlException ex)
-            {
-                //TODO:添加ex输出信息
-                System.Windows.MessageBox.Show("Sql error(s) occur: " + ex.ToString());
-                return false;
-            }catch(Exception ex)
-            {
-                //TODO:添加ex输出信息
-                System.Windows.MessageBox.Show("Error(s) occur: " + ex.ToString());
-                return false;
-            }
+            //}
+            //catch (SqlException ex)
+            //{
+            //    //TODO:添加ex输出信息
+            //    System.Windows.MessageBox.Show("Sql error(s) occur: " + ex.ToString());
+            //    return false;
+            //}catch(Exception ex)
+            //{
+            //    //TODO:添加ex输出信息
+            //    System.Windows.MessageBox.Show("Error(s) occur: " + ex.ToString());
+            //    return false;
+            //}
             return true;
         }
 
         /// <summary>
         /// 对于数据库单个数据的查询
         /// </summary>
-        /// <param name="TableName">查询的表名</param>
         /// <param name="Command">查询的命令</param>
         /// <returns>如果没有则返回Null</returns>
-        public static object Query(string TableName, string Command)
+        public static object Query(string Command)
         {
             try
             {
@@ -181,30 +180,21 @@ namespace LPS.Utility
         /// <summary>
         /// 获取数据表
         /// </summary>
-        /// <param name="tableName">要填充的表名</param>
         /// <param name="command">执行的查询</param>
         /// <returns></returns>
-        public static DataTable FillDataTable(string tableName, string command)
+        public static DataTable FillDataTable(string command)
         {
-            try
+            using (SqlConnection connection = new SqlConnection(
+connectionString(DefaultConnectionString, UID, Password)))
             {
-                using (SqlConnection connection = new SqlConnection(
-   connectionString(DefaultConnectionString, UID, Password)))
-                {
-                    connection.Open();
+                connection.Open();
 
-                    SqlDataAdapter adapter = new SqlDataAdapter(command, connection);
-                    DataTable dataTable = new DataTable();
-                    adapter.Fill(dataTable);
-                    return dataTable;
-                }
+                SqlDataAdapter adapter = new SqlDataAdapter(command, connection);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                return dataTable;
             }
-            catch (SqlException ex)
-            {
-                //TODO:添加ex输出信息
-                System.Windows.MessageBox.Show("Sql Error(s) occur: " + ex.ToString());
-                return null;
-            }
+
         }
 
         /// <summary>

@@ -52,8 +52,11 @@ namespace LPS
             //Functions.BackProduct(backList);
             //CreateRFQ(backList, "TEST20191210");
 
-            Forms.RFQ.RFQForm rfq = new Forms.RFQ.RFQForm();
-            rfq.Show();
+            //Forms.RFQ.RFQForm rfq = new Forms.RFQ.RFQForm();
+            //rfq.Show();
+
+            Forms.RFQ.QuotationForm qf = new Forms.RFQ.QuotationForm();
+            qf.Show();
         }
     }
 }

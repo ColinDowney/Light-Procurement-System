@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="QuotationForm" Height="800" Width="600">
     <Grid>
-        <DataGrid Name="AuditDataGrid"
+        <DataGrid Name="QuotationDataGrid"
                       IsReadOnly="False" AutoGenerateColumns="False" Margin="10,85.305,10,361.59">
             <DataGrid.ItemContainerStyle>
                 <Style TargetType="DataGridRow">
@@ -16,29 +16,28 @@
             </DataGrid.ItemContainerStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path=NO}" Width="80" IsReadOnly="True"/>
-                <DataGridTextColumn Binding="{Binding Path=UID}" Width="80" IsReadOnly="True"/>
-                <DataGridTextColumn Binding="{Binding Path=User}" Width="80" IsReadOnly="True"/>
-                <DataGridTextColumn Binding="{Binding Path=College}" Width="100" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Path=Date}" Width="150" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding Path=Notes}" Width="150" IsReadOnly="True"/>
-                <DataGridCheckBoxColumn Binding="{Binding Path=isSelected}" Width="30" x:Name="Check" IsReadOnly="False" />
+                <DataGridCheckBoxColumn Binding="{Binding Path=isSelected}" Width="80" x:Name="Check" IsReadOnly="False" />
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid Name="AuditInfoDataGrid"
+        <DataGrid Name="QuotationInfoDataGrid"
                       IsReadOnly="False" AutoGenerateColumns="False" Margin="10,442.381,10,87.419">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path=Category}" Width="80" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding Path=Name}" Width="80" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding Path=Modle}" Width="80" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding Path=Num}" Width="50" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Path=Price}" Width="50" IsReadOnly="False"/>
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="备注:" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="34.199,707.976,0,27.023" />
-        <TextBox Name="RFQNotesTextBox" FontSize="17" HorizontalAlignment="Left" Height="37.4" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="229.587"
+        <TextBox Name="QuotationNotesTextBox" FontSize="17" HorizontalAlignment="Left" Height="37.4" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="229.587"
                  MaxLength="30" Margin="107.584,705.976,0,0" />
         <Label Content="货品类别：" HorizontalAlignment="Left" Height="35.2" Margin="41.132,32.048,0,0" VerticalAlignment="Top" Width="73.201"/>
         <Button Name="FilterButton" Content="筛选" Click="FilterButton_Click" HorizontalAlignment="Left" Height="40" Margin="336.019,27.248,0,0" VerticalAlignment="Top" Width="94.4"/>
-        <ComboBox Name="RFQCategoryCombobox" HorizontalAlignment="Left" Margin="137.533,32.048,0,0" VerticalAlignment="Top" Width="153.6" Height="35.2"/>
+        <ComboBox Name="QuotationCategoryCombobox" HorizontalAlignment="Left" Margin="137.533,32.048,0,0" VerticalAlignment="Top" Width="153.6" Height="35.2"/>
         <Button Name="FilterCancelButton" Click="FilterCancelButton_Click"  Content="取消" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="94.4" Margin="463.4,27.248,0,0"/>
-        <Button Name="RFQ_CreatButton" Click="RFQ_CreatButton_Click" Content="创建" HorizontalAlignment="Left" Width="109.876" Margin="447.924,705.976,0,27.024" />
+        <Button Name="Quotation_CreatButton" Click="Quotation_CreatButton_Click" Content="创建" HorizontalAlignment="Left" Width="109.876" Margin="447.924,705.976,0,27.024" />
     </Grid>
 </Window>
