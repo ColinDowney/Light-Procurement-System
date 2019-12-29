@@ -56,6 +56,9 @@
     <Compile Include="Forms\CreateAccount.xaml.cs">
       <DependentUpon>CreateAccount.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\DataView.xaml.cs">
+      <DependentUpon>DataView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
@@ -100,6 +103,10 @@
     <Compile Include="Utility\Database.cs" />
     <Compile Include="Utility\Tools.cs" />
     <Page Include="Forms\CreateAccount.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\DataView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

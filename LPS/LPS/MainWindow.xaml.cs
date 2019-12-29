@@ -51,8 +51,12 @@ namespace LPS
             //Forms.RFQ.QuotationForm qf = new Forms.RFQ.QuotationForm();
             //qf.Show();
 
-            Forms.RFQ.QuotationAudit qa = new Forms.RFQ.QuotationAudit();
-            qa.Show();
+            //Forms.RFQ.QuotationAudit qa = new Forms.RFQ.QuotationAudit();
+            //qa.Show();
+
+            Forms.DataView dv = new DataView();
+            dv.Initialize(new bool[] { true, true, true, true, true, true, true, true, true, true }, "Order_form", new string[] { "单号", "顾客编号", "创建日期", "状态", "备注" });
+            dv.Show();
         }
     }
 }
