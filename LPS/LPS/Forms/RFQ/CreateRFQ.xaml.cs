@@ -153,7 +153,7 @@ namespace LPS.Forms.RFQ
                     }
                 }
                 //创建询价单
-                CreateRFQ(products, RFQNotesTextBox.Text.Trim());
+                //CreateRFQ(products, RFQNotesTextBox.Text.Trim());
                 foreach (MyItem i in toRemove)
                 {
                     _cache.Remove(i);

@@ -197,7 +197,7 @@ namespace LPS.Manager
             }
             return null;
         }
-
+        /*
         /// <summary>
         /// 创建这一笔货品对应的询价单及询价细单
         /// </summary>
@@ -271,6 +271,52 @@ namespace LPS.Manager
                     UpdateOrderInformationStatus(item);
                     //MessageBox.Show("添加成功！");
                 }
+            }
+            //嘛 实际上后端不应该弹消息才对的……随便了……
+            catch (Exception ex)
+            {
+                throw ex;
+                //System.Windows.MessageBox.Show("Error: " + ex.Message);
+            }
+        }    
+        */
+
+        /// <summary>
+        /// 创建这一笔订购单对应的询价单
+        /// </summary>
+        /// <param name="Order_id">订购单编号</param>
+        /// <param name="Notes">询价单备注</param>
+        public static void CreateRFQ(int Order_id, string Notes = "")
+        {
+            try
+            {
+                if (Notes == null)
+                    Notes = "";
+                string tableName = "RFQ";
+                string comInsert = "INSERT INTO " +
+                    tableName + "(RFQ_createdate, RFQ_status, RFQ_notes, Order_id_FK)" +
+                    "values(@DATE, @STATUS, @NOTES, @ORDERID)";
+                SqlDbType[] types = { SqlDbType.DateTime, SqlDbType.VarChar, SqlDbType.VarChar, SqlDbType.Int };//数据类型
+                string[] keys = { "@DATE", "@STATUS", "@NOTES", "ORDERID" };//上面写的参数名
+
+                List<object> values = new List<object>();//用来临时存参数的
+                Dictionary<string, List<object>> parameters = new Dictionary<string, List<object>>();//用来传参的
+                bool returnVal = false;//判断是否成功执行
+
+                values.Add(System.DateTime.Now);
+                values.Add("等待");
+                values.Add(Notes);
+                values.Add(Order_id);
+
+                for (int j = 0; j < values.Count; ++j)
+                {
+                    //依次把参数放入字典中
+                    parameters[keys[j]] = new List<object> { types[j], values[j] };
+                }
+                returnVal = Database.Insert(parameters, comInsert);
+                //这里设计有问题哦 既然之前handle了exception为什么这里还要throw哦
+                if (!returnVal)
+                    throw new Exception("Error occur when inserting the RFQ form.");
             }
             //嘛 实际上后端不应该弹消息才对的……随便了……
             catch (Exception ex)

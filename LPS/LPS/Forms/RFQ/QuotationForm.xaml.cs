@@ -33,26 +33,20 @@ namespace LPS.Forms.RFQ
         /// </summary>
         public class MyItem
         {
+            public MyItem(int nO, DateTime date, string notes, bool isSelected, int order_id)
+            {
+                NO = nO;
+                Date = date;
+                Notes = notes;
+                this.isSelected = isSelected;
+                Order_id = order_id;
+            }
+
             public int NO { get; set; }
             public DateTime Date { get; set; }
             public string Notes { get; set; }
             public bool isSelected { get; set; }
-
-            public MyItem(int nO, DateTime date, string notes, bool isSelected)
-            {
-                NO = nO;
-                Date = date;
-                Notes = notes;
-                this.isSelected = isSelected;
-            }
-
-            public void Set(int nO, DateTime date, string notes, bool isSelected)
-            {
-                NO = nO;
-                Date = date;
-                Notes = notes;
-                this.isSelected = isSelected;
-            }
+            public int Order_id { get; set; }
         }
 
         /// <summary>
@@ -135,7 +129,7 @@ namespace LPS.Forms.RFQ
                 foreach (DataRow row in dataTable.Rows)
                 {
                     MyItem tempItem = new MyItem((int)row["RFQ_id_PK"], (DateTime)row["RFQ_createdate"],
-                        (string)row["RFQ_notes"], false);
+                        (string)row["RFQ_notes"], false, (int)row["Order_id_FK"]);
                     _cache.Add(tempItem);
                 }
                 //_cache.OrderByDescending<MyItem>
@@ -186,11 +180,13 @@ namespace LPS.Forms.RFQ
                 }
 
                 DataTable dataTable = Database.FillDataTable(
-                    "SELECT Product_category, Product_name, Product_modle, Num_of_product,RFQ_id_FK FROM RFQ_information WHERE RFQ_id_FK=" + info.NO);
+                    "SELECT Product_category, Product_name, Product_modle, Num_of_product,Order_information_form_id_PK,RFQ_id_PK " +
+                    "FROM Order_information INNER JOIN RFQ ON " +
+                    "Order_information.Order_form_id_FK=RFQ.Order_id_FK WHERE RFQ_id_PK=" + info.NO);
                 foreach (DataRow row in dataTable.Rows)
                 {
                     Info tempItem = new Info((string)row["Product_category"], (string)row["Product_name"],
-                        (string)row["Product_modle"], (int)row["Num_of_product"], -1m, (int)row["RFQ_id_FK"]);
+                        (string)row["Product_modle"], (int)row["Num_of_product"], -1m, (int)row["Order_information_form_id_PK"]);
                     _info.Add(tempItem);
                 }
             }
@@ -270,10 +266,10 @@ namespace LPS.Forms.RFQ
                             values.Clear();
                             tableName = "Quotation_information";
                             comInsert = "INSERT INTO " +
-                                tableName + "(Quotation_id_FK, RFQ_information_id_FK, Price_of_product)" +
-                                "values(@ID, @RFQ, @PRICE)";
+                                tableName + "(Quotation_id_FK, Order_information_form_id_FK, Price)" +
+                                "values(@ID, @ORDERINFO, @PRICE)";
                             SqlDbType[] itypes = { SqlDbType.Int, SqlDbType.Int, SqlDbType.Money };//数据类型
-                            string[] ikeys = { "@ID", "@RFQ", "@PRICE" };//上面写的参数名
+                            string[] ikeys = { "@ID", "@ORDERINFO", "@PRICE" };//上面写的参数名
 
                             Dictionary<string, List<object>> iparameters = new Dictionary<string, List<object>>();//用来传参的
                             returnVal = false;//判断是否成功执行

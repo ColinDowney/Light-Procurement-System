@@ -47,6 +47,16 @@ namespace LPS
             //Forms.Order.OrderAudit orderAudit = new Forms.Order.OrderAudit();
             //orderAudit.Show();
 
+
+            //Forms.RFQ.QuotationForm qf = new Forms.RFQ.QuotationForm();
+            //qf.Show();
+
+            Forms.RFQ.QuotationAudit qa = new Forms.RFQ.QuotationAudit();
+            qa.Show();
+        }
+    }
+}
+
             //InsertGoodsInOrderToInventory();
             //List<product> backList = Functions.checkInventory();
             //Functions.BackProduct(backList);
@@ -54,9 +64,3 @@ namespace LPS
 
             //Forms.RFQ.RFQForm rfq = new Forms.RFQ.RFQForm();
             //rfq.Show();
-
-            Forms.RFQ.QuotationForm qf = new Forms.RFQ.QuotationForm();
-            qf.Show();
-        }
-    }
-}

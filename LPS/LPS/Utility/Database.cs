@@ -12,6 +12,7 @@ namespace LPS.Utility
     public static class Database
     {
         public static readonly string DefaultConnectionString = "server=LAPTOP-G05DHBB3\\SQLEXPRESS;database=LPS-Database;Integrated Security=true;";//
+        public static readonly string DatabaseName = "LPS-Database";
         public static string UID = "0123123";//for debug, it should be String.Empty;//登陆ID
         public static int UNO = 1;
         private static SecureString Password = new SecureString();//登陆密码
@@ -223,5 +224,192 @@ connectionString(DefaultConnectionString, UID, Password)))
                 return -1;
             }
         }
+
+        /// <summary>
+        /// 切割字符串
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="bg"></param>
+        /// <param name="ed"></param>
+        /// <returns></returns>
+        public static string StringCut(string str, string bg, string ed)
+        {
+            string sub;
+            sub = str.Substring(str.IndexOf(bg) + bg.Length);
+            sub = sub.Substring(0, sub.IndexOf(";"));
+            return sub;
+        }
+        /// <summary>
+        /// 构造文件名
+        /// </summary>
+        /// <returns>文件名</returns>
+        private static string AddTimeStamp(string STRING)
+        {
+            string CurrTime = System.DateTime.Now.ToString();
+            CurrTime = CurrTime.Replace(" ", "|");
+            STRING += CurrTime;
+            return STRING;
+        }
+
+        //private void Step(string message, int percent)
+        //{
+        //    Bar.Value = percent;
+        //}
+
+        /// <summary>
+        /// 数据库备份
+        /// </summary>
+        /// <returns>备份是否成功</returns>
+        public static bool DbBackup(string FilePath)
+        {
+            bool returnVal = false;
+            string filePath = "//_db_" + AddTimeStamp(FilePath) + ".BAK";
+            SQLDMO.Backup oBackup = new SQLDMO.BackupClass();
+            SQLDMO.SQLServer oSQLServer = new SQLDMO.SQLServerClass();
+            try
+            {
+                oSQLServer.LoginSecure = false;
+                oSQLServer.Connect(DefaultConnectionString, UID, Password);
+                oBackup.Action = SQLDMO.SQLDMO_BACKUP_TYPE.SQLDMOBackup_Database;
+                //SQLDMO.BackupSink_PercentCompleteEventHandler pceh = new SQLDMO.BackupSink_PercentCompleteEventHandler(Step);
+                //oBackup.PercentComplete += pceh;
+                oBackup.Database = DatabaseName;
+                oBackup.Files = filePath;
+                oBackup.BackupSetName = DatabaseName;
+                oBackup.BackupSetDescription = "数据库备份";
+                oBackup.Initialize = true;
+                oBackup.SQLBackup(oSQLServer);
+                returnVal = true;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                oSQLServer.DisConnect();
+            }
+            return returnVal;
+        }
+
+        /// <summary>
+        /// 数据库恢复
+        /// </summary>
+        public static bool DbRestore(string FilePath)
+        {
+            bool returnVal = false;
+            if (exepro() != true)
+            {
+                
+            }
+            else
+            {
+                SQLDMO.Restore oRestore = new SQLDMO.RestoreClass();
+                SQLDMO.SQLServer oSQLServer = new SQLDMO.SQLServerClass();
+                try
+                {
+                    exepro();
+                    oSQLServer.LoginSecure = false;
+                    oSQLServer.Connect(DefaultConnectionString, UID, Password);
+                    oRestore.Action = SQLDMO.SQLDMO_RESTORE_TYPE.SQLDMORestore_Database;
+                    //SQLDMO.RestoreSink_PercentCompleteEventHandler pceh = new SQLDMO.RestoreSink_PercentCompleteEventHandler(Step);
+                    //oRestore.PercentComplete += pceh;
+                    oRestore.Database = DatabaseName;
+                    ///自行修改
+                    oRestore.Files = FilePath;
+                    oRestore.FileNumber = 1;
+                    oRestore.ReplaceDatabase = true;
+                    oRestore.SQLRestore(oSQLServer);
+                    returnVal = true;
+                }
+                catch (Exception e)
+                {
+                    System.Windows.MessageBox.Show("恢复失败" + e.Message);
+                }
+                finally
+                {
+                    oSQLServer.DisConnect();
+                }
+            }
+            return returnVal;
+        }
+
+        /// <summary>
+        /// 杀死当前库的所有进程
+        /// </summary>
+        /// <returns></returns>
+        private static bool exepro()
+        {
+            bool success = true;
+            SQLDMO.SQLServer svr = new SQLDMO.SQLServerClass();
+            try
+            {
+                svr.Connect(DefaultConnectionString, UID, Password);
+                //取得所有的进程列表
+                SQLDMO.QueryResults qr = svr.EnumProcesses(-1);
+                int iColPIDNum = -1;
+                int iColDbName = -1;
+                //找到和要恢复数据库相关的进程
+                for (int i = 1; i <= qr.Columns; i++)
+                {
+                    string strName = qr.get_ColumnName(i);
+                    if (strName.ToUpper().Trim() == "SPID")
+                    {
+                        iColPIDNum = i;
+                    }
+                    else if (strName.ToUpper().Trim() == "DBNAME")
+                    {
+                        iColDbName = i;
+                    }
+                    if (iColPIDNum != -1 && iColDbName != -1)
+                        break;
+                }
+                //将相关进程关闭   
+                for (int i = 1; i <= qr.Rows; i++)
+                {
+                    int lPID = qr.GetColumnLong(i, iColPIDNum);
+                    string strDBName = qr.GetColumnString(i, iColDbName);
+                    if (strDBName.ToUpper() == DatabaseName)
+                        svr.KillProcess(lPID);
+                }
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                System.Windows.MessageBox.Show("Error occur when killing the process connecting to db. " + ex.Message);
+            }
+            return success;
+        }
+
+        /*
+        public static bool Operate(bool isBackup)
+        {
+            //备份：use master;backup database @name to disk=@path;
+            //恢复：use master;restore database @name from disk=@path; 
+            SqlConnection connection = new SqlConnection("Data Source=" + server + ";initial catalog=" + database + ";user id=" + uid + ";password=" + pwd + ";");
+            if (!restoreFile.EndsWith(".bak"))
+            {
+                restoreFile += ".bak";
+            }
+            if (isBackup)//备份数据库 
+            {
+                SqlCommand command = new SqlCommand("use master;backup database @name to disk=@path;", connection);
+                connection.Open();
+                command.Parameters.AddWithValue("@name", Database);
+                command.Parameters.AddWithValue("@path", restoreFile);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+            else//恢复数据库 
+            {
+                SqlCommand command = new SqlCommand("use master;restore database @name from disk=@path;", connection);
+                connection.Open();
+                command.Parameters.AddWithValue("@name", Database);
+                command.Parameters.AddWithValue("@path", restoreFile);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+            return true;
+        }*/
     }
 }

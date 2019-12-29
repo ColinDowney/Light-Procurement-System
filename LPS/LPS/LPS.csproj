@@ -86,6 +86,9 @@
     <Compile Include="Forms\RFQ\CreateRFQ.xaml.cs">
       <DependentUpon>CreateRFQ.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\RFQ\QuotationAudit.xaml.cs">
+      <DependentUpon>QuotationAudit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\RFQ\QuotationForm.xaml.cs">
       <DependentUpon>QuotationForm.xaml</DependentUpon>
     </Compile>
@@ -140,6 +143,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Forms\RFQ\QuotationAudit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Forms\RFQ\QuotationForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -186,6 +193,17 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\Audit\" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="SQLDMO">
+      <Guid>{10010001-E260-11CF-AE68-00AA004A34D5}</Guid>
+      <VersionMajor>8</VersionMajor>
+      <VersionMinor>5</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

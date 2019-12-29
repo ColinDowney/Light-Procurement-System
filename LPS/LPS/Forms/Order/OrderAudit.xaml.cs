@@ -15,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static LPS.Manager.Functions;
 
 namespace LPS.Forms.Order
 {
@@ -230,16 +231,18 @@ namespace LPS.Forms.Order
             try
             {
                 MyItem item;
+                
                 foreach (var i in AuditDataGrid.Items)
                 {
                     item = i as MyItem;
                     if (item.isSelected)
                     {
+                        //更新订购单状态
                         Functions.UpdateOrderStatus(state, item.NO);
-                        //string command = string.Format("UPDATE Order_form SET Order_form_status='{0}' WHERE Order_form_id_PK={1}",state , item.NO);
-                        //int re = Database.ExecuteSqlCommand(command);
-                        //if (re <= 0)
-                        //    throw new Exception("Error occur when updating '" + item.NO + "'.");
+
+                        //创建询价单
+                        CreateRFQ(item.NO, item.Notes);
+
                         toRemove.Add(item);
                     }
                 }
