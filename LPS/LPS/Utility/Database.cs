@@ -380,6 +380,44 @@ connectionString(DefaultConnectionString, UID, Password)))
             }
             return success;
         }
+        
+         ///ZHung
+        /// <summary>
+        /// 修改数据表
+        /// </summary>
+        /// <param name="command">执行的查询</param>
+        /// 要改的表 要修改表的主键 具体对象 修改后的内容
+        /// <returns></returns>
+        public static void changeSql(String Table_name, String change_ID, String Change_item, String Change_status)
+        {
+            using (SqlConnection connection = new SqlConnection(
+connectionString(DefaultConnectionString, UID, Password)))
+            {
+                try
+                {
+                    connection.Open();
+                    string strmodify = "Update " + Table_name + "set " + Change_item + "='" + Change_status + "'" + "where " + Table_name + "_id_PK=" + "'" + change_ID + "'";
+                    SqlCommand sqlcmd = new SqlCommand(strmodify, connection);
+                    sqlcmd.ExecuteNonQuery();
+                    MessageBox.Show("修改成功");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("连接错误" + ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+
+
+            }
+
+
+
+        }
+
+
 
         /*
         public static bool Operate(bool isBackup)
