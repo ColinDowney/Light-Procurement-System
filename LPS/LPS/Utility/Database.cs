@@ -276,7 +276,7 @@ connectionString(DefaultConnectionString, UID, Password)))
                 oBackup.Database = DatabaseName;
                 oBackup.Files = filePath;
                 oBackup.BackupSetName = DatabaseName;
-                oBackup.BackupSetDescription = "数据库备份";
+                oBackup.BackupSetDescription = AddTimeStamp("数据库备份");
                 oBackup.Initialize = true;
                 oBackup.SQLBackup(oSQLServer);
                 returnVal = true;
