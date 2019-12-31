@@ -98,11 +98,11 @@ namespace LPS.Forms.Order
             {
 
                 //从进货通知中获取待进货的信息
-                int order_form_id = (int)Database.Query("SELECT Order_form_id_FK FROM Purchase_notice WHERE Purchase_notice_status='待进货'");
+                int order_form_id = (int)Database.Query("SELECT Order_form_id FROM Purchase_notice WHERE Purchase_notice_status='待进货'");
                 //获取到Order_form_id_FK报价单编号
                 string command = string.Format("SELECT * FROM Quotation WHERE Quotation_id_FK={0}", order_form_id);
                 //获取报价单和报价单单号
-                DataTable quotationTable = Database.FillDataTable("Quotation", command);
+                DataTable quotationTable = Database.FillDataTable(command);
                 int quotation_id = (int)Database.Query("SELECT Quotation_id_FK FROM Quotation");
                 //耗时操作
                 foreach (DataRow row in quotationTable.Rows)
@@ -156,7 +156,7 @@ namespace LPS.Forms.Order
                 }
                 //获取报价详细单
                 string command = string.Format("SELECT * FROM Quotation_information WHERE Quotation_id_FK={0}",info.NO);
-                DataTable quotationInfoTable = Database.FillDataTable("Quation_information", command);
+                DataTable quotationInfoTable = Database.FillDataTable(command);
                 foreach (DataRow row in quotationInfoTable.Rows)
                 {
                     Info tempItem = new Info((string)row["Product_category"], (string)row["Product_name"], (string)row["Product_modle"], (int)row["Num_of_product"],(double)row["Price_of_product"]);
@@ -172,7 +172,7 @@ namespace LPS.Forms.Order
 
         private void OrderFromSupplier_Click(object sender, RoutedEventArgs e)
         {
-            Info info;
+            //Info info;
             List<object> values = new List<object>();//用来临时存参数的
             Dictionary<string, List<Object>> parameters1 = new Dictionary<string, List<object>>();
             Dictionary<string, List<Object>> parameters2 = new Dictionary<string, List<object>>();
@@ -186,7 +186,7 @@ namespace LPS.Forms.Order
                     if (item.isSelected)
                     {//获取报价详细单
                         string com = string.Format("SELECT * FROM Quotation_information WHERE Quotation_id_FK={0}", item.NO);
-                        DataTable quotationInfoTable = Database.FillDataTable("Quation_information", com);
+                        DataTable quotationInfoTable = Database.FillDataTable(com);
                         Info tempItem = null;
                         foreach (DataRow row in quotationInfoTable.Rows)
                         {

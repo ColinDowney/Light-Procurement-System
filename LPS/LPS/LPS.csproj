@@ -71,6 +71,13 @@
     <Compile Include="Forms\Order\OrderAudit.xaml.cs">
       <DependentUpon>OrderAudit.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Order\Order_to_supplier.xaml.cs">
+      <DependentUpon>Order_to_supplier.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Order\PickUp.xaml.cs">
+      <DependentUpon>PickUp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Order\Purchase_input.xaml.cs" />
     <Compile Include="Forms\Pages\CreateAccount_Admin.xaml.cs">
       <DependentUpon>CreateAccount_Admin.xaml</DependentUpon>
     </Compile>
@@ -125,6 +132,18 @@
     <Page Include="Forms\Order\OrderAudit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Order\Order_to_supplier.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Forms\Order\PickUp.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Forms\Order\Purchase_input.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Forms\Pages\CreateAccount_Admin.xaml">
       <SubType>Designer</SubType>

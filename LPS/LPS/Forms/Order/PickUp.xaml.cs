@@ -15,7 +15,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 
-namespace LPS.Forms.DataView
+namespace LPS.Forms.Order
 {
     /// <summary>
     /// PickUp.xaml 的交互逻辑
@@ -117,7 +117,7 @@ namespace LPS.Forms.DataView
             try
             {
                 //耗时操作
-                DataTable dataTable = Database.FillDataTable("Sales_batch", "SELECT * FROM Sales_batch WHERE Sales_batch_status='待取货'");
+                DataTable dataTable = Database.FillDataTable("SELECT * FROM Sales_batch WHERE Sales_batch_status='待取货'");
                 foreach (DataRow row in dataTable.Rows)
                 {
                     //查询发起订单的用户信息
@@ -170,7 +170,7 @@ namespace LPS.Forms.DataView
                     info = grid.Item as MyItem;
                 }
 
-                DataTable dataTable = Database.FillDataTable("Sales_order",
+                DataTable dataTable = Database.FillDataTable(
                     "SELECT Product_id_FK, Price_of_product, Num_of_product FROM Sales_order WHERE Sales_batch_id_FK=" + info.Sale_NO);
                 foreach (DataRow row in dataTable.Rows)
                 {

@@ -276,7 +276,7 @@ connectionString(DefaultConnectionString, UID, Password)))
                 oBackup.Database = DatabaseName;
                 oBackup.Files = filePath;
                 oBackup.BackupSetName = DatabaseName;
-                oBackup.BackupSetDescription = "数据库备份";
+                oBackup.BackupSetDescription = AddTimeStamp("数据库备份");
                 oBackup.Initialize = true;
                 oBackup.SQLBackup(oSQLServer);
                 returnVal = true;
@@ -411,5 +411,38 @@ connectionString(DefaultConnectionString, UID, Password)))
             }
             return true;
         }*/
+
+
+        /// <summary>
+        ///  ZHung修改数据表:要改的表 要修改表的主键 具体对象 修改后的内容
+        /// </summary>
+        /// <param name="Table_name"></param>
+        /// <param name="change_ID"></param>
+        /// <param name="Change_item"></param>
+        /// <param name="Change_status"></param>
+        public static void changeSql(String Table_name, String change_ID, String Change_item, String Change_status)
+        {
+            using (SqlConnection connection = new SqlConnection(
+connectionString(DefaultConnectionString, UID, Password)))
+            {
+                try
+                {
+                    connection.Open();
+                    string strmodify = "Update " + Table_name + "set " + Change_item + "='" + Change_status + "'" + "where " + Table_name + "_id_PK=" + "'" + change_ID + "'";
+                    SqlCommand sqlcmd = new SqlCommand(strmodify, connection);
+                    sqlcmd.ExecuteNonQuery();
+                    System.Windows.MessageBox.Show("修改成功");
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show("连接错误" + ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
+
     }
 }

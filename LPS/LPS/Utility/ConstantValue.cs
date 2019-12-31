@@ -64,5 +64,9 @@ namespace LPS.Utility
                 //<DataGridTextColumn Binding = "{Binding Path=Notes}" Width="50" IsReadOnly="False"/>
                 //<DataGridCheckBoxColumn Binding = "{Binding Path=isSelected}" Width="80" x:Name="Check" IsReadOnly="False" />
         public static string[] QuotationAudit_formColName = { "单号", "来源", "供货商", "日期", "备注", "审核通过"};
+
+        public static string[] Sale_informationColName = { "销售详单号", "销售批次单号", "货品编号", "数量", "单价", "备注" };
+        public static string[] Sale_formColName = { "销售批次单号","用户编号","订购单编号","货品来源",
+            "管理员编号","总价","创建日期","销售单状态","备注" };
     }
 }
