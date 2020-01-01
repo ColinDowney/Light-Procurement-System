@@ -13,10 +13,11 @@ using Microsoft.SqlServer.Management.Smo;
 namespace LPS.Utility
 {
     public static class Database
-    {
-        public static readonly string DefaultConnectionString = "server=LAPTOP-G05DHBB3\\SQLEXPRESS;database=LPSDB;";//Integrated Security=true;
-        public static readonly string DatabaseAddress = "server=LAPTOP-G05DHBB3\\SQLEXPRESS;";
-        public static readonly string InstanceName = "LAPTOP-G05DHBB3\\SQLEXPRESS";
+    {//LAPTOP-G05DHBB3\\SQLEXPRESS
+        public static readonly string ServerName = "LAPTOP-G05DHBB3\\SQLEXPRESS";
+        public static readonly string DefaultConnectionString = "server="+ServerName+";database=LPSDB;";//Integrated Security=true;
+        public static readonly string DatabaseAddress = "server=" + ServerName + ";";
+        public static readonly string InstanceName = ServerName;
         public static readonly string DatabaseName = "LPSDB";
         public static string UID = String.Empty;//for debug, it should be String.Empty;//登陆ID
         public static int UNO = -1;

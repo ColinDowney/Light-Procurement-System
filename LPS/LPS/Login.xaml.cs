@@ -42,12 +42,12 @@ namespace LPS
             if (Manager.Functions.Login(userid, password))
             {
                 MessageBox.Show("成功登陆");
-                //MainMenu mu = new MainMenu();
-                //mu.Show();
+                MainMenu mu = new MainMenu();
+                mu.Show();
                 //CustomerMain cm = new CustomerMain();
                 //cm.Show();
-                SupplierMain sm = new SupplierMain();
-                sm.Show();
+                //SupplierMain sm = new SupplierMain();
+                //sm.Show();
                 this.Close();
             }
             else
