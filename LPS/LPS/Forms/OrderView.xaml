@@ -1,11 +1,11 @@
-﻿<Window x:Class="LPS.Forms.Order.OrderAudit"
+﻿<Window x:Class="LPS.OrderView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:LPS.Forms.Order"
+        xmlns:local="clr-namespace:LPS"
         mc:Ignorable="d"
-        Title="OrderAudit" Height="800" Width="600">
+        Title="OrderView" Height="800" Width="600">
     <Grid>
         <DataGrid Name="AuditDataGrid"
                       IsReadOnly="False" AutoGenerateColumns="False" Margin="10,198.4,10,335.4">
@@ -17,10 +17,9 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path=NO}" Width="80" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding Path=UID}" Width="80" IsReadOnly="True"/>
-                <DataGridTextColumn Binding="{Binding Path=User}" Width="80" IsReadOnly="True"/>
-                <DataGridTextColumn Binding="{Binding Path=College}" Width="100" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Path=Price}" Width="80" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Path=Date}" Width="100" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding Path=Notes}" Width="150" IsReadOnly="True"/>
-                <DataGridCheckBoxColumn Binding="{Binding Path=isSelected}" Width="30" x:Name="Check" IsReadOnly="False" />
             </DataGrid.Columns>
         </DataGrid>
         <DataGrid Name="AuditInfoDataGrid"
@@ -30,20 +29,12 @@
                 <DataGridTextColumn Binding="{Binding Path=Name}" Width="80" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding Path=Modle}" Width="80" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding Path=Num}" Width="50" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Path=Price}" Width="50" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Name="OrderPass" Click="OrderPass_Click" Content="通过" HorizontalAlignment="Left" Margin="404.2,708,0,0" VerticalAlignment="Top" Width="76.2" Height="42.4"/>
-        <Button Name="OrderFail" Click="OrderFail_Click" Content="不通过" HorizontalAlignment="Left" Margin="507.4,708,0,0" VerticalAlignment="Top" Width="76.2" Height="42.4"/>
-        <Label Name="Send" Content="发送信息:" FontSize="20" HorizontalAlignment="Left" Margin="34.199,713,0,15" VerticalAlignment="Center" Height="42.4"/>
-        <TextBox Name="SendMessageBox" FontSize="17" HorizontalAlignment="Left" Height="37.4" Margin="129.013,713,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="229.587"
-                 MaxLength="30"/>
-        <Label Content="订购单编号" HorizontalAlignment="Left" Height="35.2" Margin="34.199,38,0,0" VerticalAlignment="Top" Width="89.814"/>
-        <Label Name="AccountID"  Content="用户账号" HorizontalAlignment="Left" Height="35.2" Margin="34.199,108.4,0,0" VerticalAlignment="Top" Width="65.412"/>
-        <Label Name="School" Content="学院" HorizontalAlignment="Left" Height="35.2" Margin="307.799,38,0,0" VerticalAlignment="Top" Width="73.201"/>
+        <Label Content="订货单编号" HorizontalAlignment="Left" Height="35.2" Margin="34.199,38,0,0" VerticalAlignment="Top" Width="89.814"/>
         <Button Content="筛选" HorizontalAlignment="Left" Height="40" Margin="463.4,108.4,0,0" VerticalAlignment="Top" Width="94.4"/>
         <TextBox Name="OrderAuditNOInput" MaxLength="10" MaxLines="1" HorizontalAlignment="Left" Height="40.2" Margin="129.013,33,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="151.387"/>
-        <TextBox Name="OrderAuditUIDInput" MaxLength="7" MaxLines="1" HorizontalAlignment="Left" Height="40.2" Margin="129.013,108.4,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="151.387"/>
-        <ComboBox Name="OrderAuditSchoolCombobox" HorizontalAlignment="Left" Margin="404.2,38,0,0" VerticalAlignment="Top" Width="153.6" Height="35.2"/>
         <Button Name="FilterCancelButton" Click="FilterCancelButton_Click"  Content="取消" HorizontalAlignment="Left" Height="40" Margin="463.4,108.4,0,0" VerticalAlignment="Top" Width="94.4"/>
         <Button Name="FilterButton" Click="FilterButton_Click" Content="筛选" HorizontalAlignment="Left" Height="40" Margin="343.4,108.4,0,0" VerticalAlignment="Top" Width="94.4"/>
 

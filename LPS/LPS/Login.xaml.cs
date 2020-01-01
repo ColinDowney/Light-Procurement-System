@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace LPS.Forms
+namespace LPS
 {
     /// <summary>
     /// Login.xaml 的交互逻辑
@@ -25,6 +25,8 @@ namespace LPS.Forms
         public Login()
         {
             InitializeComponent();
+
+
         }
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
@@ -37,9 +39,16 @@ namespace LPS.Forms
             }
             userid = LoginUIDInput.Text;
             password = LoginPasswordInput.SecurePassword;
-            if (Database.Authentication(userid, password))
+            if (Manager.Functions.Login(userid, password))
             {
                 MessageBox.Show("成功登陆");
+                //MainMenu mu = new MainMenu();
+                //mu.Show();
+                //CustomerMain cm = new CustomerMain();
+                //cm.Show();
+                SupplierMain sm = new SupplierMain();
+                sm.Show();
+                this.Close();
             }
             else
             {

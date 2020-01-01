@@ -11,6 +11,13 @@ namespace LPS.Utility
 {
     public static class Tools
     {
+        public static bool checkLetters(string input)
+        {
+            string pattern = "([a-z]|[A-Z])+";
+            Regex rgx = new Regex(pattern);
+            return rgx.IsMatch(input);
+        }
+
         public static String SecureStringToString(SecureString value)
         {
             IntPtr valuePtr = IntPtr.Zero;

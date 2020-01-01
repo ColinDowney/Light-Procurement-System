@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security;
 using System.Text;
 
 namespace LPS.Manager
@@ -416,5 +417,41 @@ namespace LPS.Manager
             }
         }
 
+        public static bool Login(string userid, SecureString password)
+        {
+            try
+            {
+                Database.OnTest();
+                var temp = Database.Query("SELECT Admin_password FROM Admin_information WHERE Admin_name='" + userid + "'");
+                var uno = Database.Query("SELECT Admin_id_PK FROM Admin_information WHERE Admin_name='" + userid + "'");
+                string admin = "Colin";
+                SecureString pas = new SecureString();
+                pas.AppendChar('1');                pas.AppendChar('2');                pas.AppendChar('3');                pas.AppendChar('4');
+                if (temp == null)
+                {
+                    temp = Database.Query("SELECT Customer_password FROM Customer_information WHERE Customer_contact='" + userid + "'");
+                    uno = Database.Query("SELECT Customer_id_PK FROM Customer_information WHERE Customer_contact='" + userid + "'");
+                    if (temp == null)
+                    {
+                        temp = Database.Query("SELECT Supplier_password FROM Supplier_information WHERE Supplier_name='" + userid + "'");
+                        uno = Database.Query("SELECT Supplier_id_PK FROM Supplier_information WHERE Supplier_name='" + userid + "'");
+                    }else
+                            throw new Exception("No such account.");
+                }
+                string pw = (string)temp;
+                if (pw.Trim() != Tools.SecureStringToString(password))
+                    throw new Exception("Wrong password.");
+                //Database.Login(admin, pas);
+                Database.UNO = (int)uno;
+                return true;
+            }catch(Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                //Database.Clear();
+            }
+        }
     }
 }

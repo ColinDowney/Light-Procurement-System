@@ -59,14 +59,14 @@ namespace LPS
             //dv.Initialize(new bool[] { true, true, true, true, true, true, true, true, true, true }, "Order_form", new string[] { "单号", "顾客编号", "创建日期", "状态", "备注" });
             //dv.Show();
 
-            //Forms.Order.Purchase_input pi = new Purchase_input();
-            //pi.Show();
+            Purchase_input pi = new Purchase_input();
+            pi.Show();
 
-            //Pay_cancel pc = new Pay_cancel();
-            //pc.Show();
+            Pay_cancel pc = new Pay_cancel();
+            pc.Show();
 
-            Order_to_supplier os = new Order_to_supplier();
-            os.Show();
+            //Order_to_supplier os = new Order_to_supplier();
+            //os.Show();
 
         }
     }

@@ -82,7 +82,7 @@ namespace LPS.Forms
         //check
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            DataTable dataTable1 = Database.FillDataTable("select Sales_batch_id_PK, Price_of_all, createdate, Sales_batch_status from Sales_batch where Customer_id_FK = UID and Sales_batch_status = '待付款' ");
+            DataTable dataTable1 = Database.FillDataTable("select Sales_batch_id_PK, Price_of_all, createdate, Sales_batch_status from Sales_batch where Customer_id_FK ="+  Database.UID+" and Sales_batch_status = '待付款' ");
             //ListView_pay.View = View.Details;
             dataTable1.Columns.Add("Sales_lot_order_number");
             dataTable1.Columns.Add("Total_price");

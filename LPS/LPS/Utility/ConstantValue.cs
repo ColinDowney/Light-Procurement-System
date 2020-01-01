@@ -68,5 +68,8 @@ namespace LPS.Utility
         public static string[] Sale_informationColName = { "销售详单号", "销售批次单号", "货品编号", "数量", "单价", "备注" };
         public static string[] Sale_formColName = { "销售批次单号","用户编号","订购单编号","货品来源",
             "管理员编号","总价","创建日期","销售单状态","备注" };
+
+        public static string[] OrderViewColName = { "单号", "供货商编号", "总价", "日期", "备注" };
+        public static string[] OrderViewInfoColName = { "货品类别", "货品名称", "货品型号", "数量", "单价" };
     }
 }

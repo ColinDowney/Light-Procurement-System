@@ -29,6 +29,12 @@ namespace LPS.Forms.Order
         private ObservableCollection<MyItem> _data { get; set; }
         private ObservableCollection<Info> _info { get; set; }
         public List<MyItem> _cache { get; set; }
+        private OrderAuditType _Type { get; set; }
+
+        public enum OrderAuditType
+        {
+            OrderAudit, ViewOrder
+        }
 
         /// <summary>
         /// 展示Order_form绑定的数据模型
@@ -89,8 +95,10 @@ namespace LPS.Forms.Order
             AuditDataGrid.Items.Refresh();
         }
 
-        public OrderAudit()
+        public OrderAudit(OrderAuditType type)
         {
+            _Type = type;
+
             _demoBGWorker.DoWork += BGWorker_DoWork;
             _demoBGWorker.RunWorkerCompleted += BGWorker_RunWorkerCompleted;
             _demoBGWorker.RunWorkerAsync();
@@ -122,6 +130,19 @@ namespace LPS.Forms.Order
             {
                 AuditDataGrid.Columns[i].Header = ConstantValue.Order_formColName[i];
             }
+
+            if(_Type == OrderAuditType.ViewOrder)
+            {
+                OrderPass.Visibility = Visibility.Hidden;
+                OrderFail.Visibility = Visibility.Hidden;
+                Send.Visibility = Visibility.Hidden;
+                AccountID.Visibility = Visibility.Hidden;
+                School.Visibility = Visibility.Hidden;
+                OrderAuditSchoolCombobox.Visibility = Visibility.Hidden;
+                OrderAuditNOInput.Visibility = Visibility.Hidden;
+                SendMessageBox.Visibility = Visibility.Hidden;
+
+            }
         }
 
         private void BGWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -132,7 +153,11 @@ namespace LPS.Forms.Order
             try
             {
                 //耗时操作
-                DataTable dataTable = Database.FillDataTable("SELECT * FROM Order_form WHERE Order_form_status='未审核'");
+                DataTable dataTable = null;
+                if(_Type== OrderAuditType.OrderAudit)
+                    dataTable = Database.FillDataTable("SELECT * FROM Order_form WHERE Order_form_status='未审核'");
+                else
+                    dataTable = Database.FillDataTable("SELECT * FROM Order_form WHERE Customer_id_FK=" + Database.UNO);
                 string command;
                 DataTable tempTable;
                 foreach (DataRow row in dataTable.Rows)

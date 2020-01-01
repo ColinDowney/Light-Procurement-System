@@ -52,6 +52,9 @@ namespace LPS.Forms.Pages
                     String.IsNullOrEmpty(CreateAccount_NameText.Text) ||
                     !Tools.CheckNumberSequence(CreateAccount_PhoneNumberText.Text.Trim()))
                     throw new Exception("Illegal input.");
+
+                //Database.CreateAdminAccount(CreateAccount_NameText.Text.Trim(), CreateAccount_PasswordText.SecurePassword);
+
                 string email, phone;
                 email = phone = "";
                 if (!String.IsNullOrEmpty(CreateAccount_EmailText.Text))

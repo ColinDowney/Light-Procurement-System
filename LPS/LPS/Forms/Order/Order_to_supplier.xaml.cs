@@ -208,7 +208,7 @@ namespace LPS.Forms.Order
                             values.Add(orderID);
                             values.Add(item.SID);
                             values.Add(price_of_all);
-                            DateTime date = new DateTime();
+                            DateTime date = System.DateTime.Now;
                             values.Add(date);
                             item.Notes = OrderToSupplierNotes.Text;
                             values.Add(item.Notes);

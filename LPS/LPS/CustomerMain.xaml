@@ -1,0 +1,16 @@
+﻿<Window x:Class="LPS.CustomerMain"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LPS"
+        mc:Ignorable="d"
+        Title="CustomerMain" Height="450" Width="800">
+    <Grid>
+        <Button Content="创建订购单" Name="Create" Click="Create_Click"  HorizontalAlignment="Left" Margin="68.103,266.733,0,0" VerticalAlignment="Top" Width="102.465" Height="44.592"/>
+        <Button Content="查看订购单" Name="ViewOrder" Click="ViewOrder_Click" HorizontalAlignment="Left" Margin="298.385,266.733,0,0" VerticalAlignment="Top" Width="102.465" Height="44.592"/>
+        <Button  Content="付款" Name="Pay" Click="Pay_Click" HorizontalAlignment="Left" Margin="518.103,266.733,0,0" VerticalAlignment="Top" Width="102.465" Height="44.592"/>
+        <Label Name="Hello" Content="Label" HorizontalAlignment="Left" Height="40.185" Margin="44.863,10,0,0" VerticalAlignment="Top" Width="190.141"/>
+
+    </Grid>
+</Window>

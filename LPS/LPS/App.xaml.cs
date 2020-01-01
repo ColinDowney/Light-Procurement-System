@@ -12,5 +12,11 @@ namespace LPS
     /// </summary>
     public partial class App : Application
     {
+
+    private void Application_Startup(object sender, StartupEventArgs e)
+    {
+        Application currApp = Application.Current;
+        currApp.StartupUri = new Uri("Login.xaml", UriKind.RelativeOrAbsolute);
+    }
     }
 }
