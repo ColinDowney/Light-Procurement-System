@@ -50,10 +50,10 @@ namespace LPS.Forms.Order
         private class MyItem
         {
             public int Sale_NO { get; set; }
-            public string UID { get; set; }
-            public string Purchase_NO { get; set; }
+            public int UID { get; set; }
+            public int Purchase_NO { get; set; }
             public string Product_Source { get; set; }
-            public string MID { get; set; }
+            public int MID { get; set; }
             public double Total_Price { get; set; }
             public string Date { get; set; }
             public string Sale_State { get; set; }
@@ -61,8 +61,8 @@ namespace LPS.Forms.Order
             public bool isSelected { get; set; }
 
 
-            public MyItem(int nO, string uID, string purchase_NO, string product_Source, 
-                string mID,double total_Price,string date,string sale_State,string sale_Note)
+            public MyItem(int nO, int uID, int purchase_NO, string product_Source,
+                int mID, double total_Price, string date, string sale_State, string sale_Note)
             {
                 Sale_NO = nO;
                 UID = uID;
@@ -76,8 +76,8 @@ namespace LPS.Forms.Order
                 isSelected = false;
             }
 
-            public void Set(int nO, string uID, string purchase_NO, string product_Source,
-                string mID, double total_Price, string date, string sale_State, string sale_Note)
+            public void Set(int nO, int uID, int purchase_NO, string product_Source,
+                int mID, double total_Price, string date, string sale_State, string sale_Note)
             {
                 Sale_NO = nO;
                 UID = uID;
@@ -96,12 +96,12 @@ namespace LPS.Forms.Order
         /// </summary>
         private class Info
         {
-            public string Sale_info_No { get; set; }
-            public string Product_No { get; set; }
+            public int Sale_info_No { get; set; }
+            public int Product_No { get; set; }
             public int Num { get; set; }
             public double Price { get; set; }
 
-            public Info(string sale_info_No,string product_No, int num,double price)
+            public Info(int sale_info_No, int product_No, int num, double price)
             {
                 Sale_info_No = sale_info_No;
                 Product_No = product_No;
@@ -117,12 +117,11 @@ namespace LPS.Forms.Order
             try
             {
                 //耗时操作
-                DataTable dataTable = Database.FillDataTable("SELECT * FROM Sales_batch WHERE Sales_batch_status='待取货'");
+                DataTable dataTable = Database.FillDataTable( "SELECT * FROM Sales_batch WHERE Sales_batch_status='待取货'");
                 foreach (DataRow row in dataTable.Rows)
                 {
-                    //查询发起订单的用户信息
-                    MyItem tempItem = new MyItem((int)row["Sales_batch_id_PK"], (string)row["Customer_id_FK"], ((string)row["Order_form_id_FK"]).Trim(),
-                        ((string)row["Source_of_goods"]).Trim(), ((string)row["Admin_id_FK"]).Trim(), (double)row["Price_of_all"], ((string)row["createdate"]).Trim(), ((string)row["Sales_batch_status"]).Trim(), ((string)row["Sales_batch_notes"]).Trim());
+                    MyItem tempItem = new MyItem((int)row["Sales_batch_id_PK"], (int)row["Customer_id_FK"], (int)row["Order_form_id_FK"],
+                        ((string)row["Source_of_goods"]).Trim(), (int)row["Admin_id_FK"], (double)row["Price_of_all"], ((string)row["createdate"]).Trim(), ((string)row["Sales_batch_status"]).Trim(), ((string)row["Sales_batch_notes"]).Trim());
                     _data.Add(tempItem);
                 }
             }
@@ -174,7 +173,7 @@ namespace LPS.Forms.Order
                     "SELECT Product_id_FK, Price_of_product, Num_of_product FROM Sales_order WHERE Sales_batch_id_FK=" + info.Sale_NO);
                 foreach (DataRow row in dataTable.Rows)
                 {
-                    Info tempItem = new Info((string)row["Sales_order_id_PK"], (string)row["Product_id_FK"], (int)row["Num_of_product"], (double)row["Price_of_product"]);
+                    Info tempItem = new Info((int)row["Sales_order_id_PK"], (int)row["Product_id_FK"], (int)row["Num_of_product"], (double)row["Price_of_product"]);
                     _info.Add(tempItem);
                 }
             }
@@ -183,7 +182,7 @@ namespace LPS.Forms.Order
                 Tools.ShowMessageBox(ex.Message);
             }
         }
-        
+
 
         /// <summary>
         /// 更新销售单的状态
@@ -248,8 +247,8 @@ namespace LPS.Forms.Order
                         {
                             string comInsert = "INSERT INTO" + tableName + "(Pick_up_order_id_PK,Customer_id_FK,Pick_up_order_createdate)" +
                                 "value(@ID,@SID,@DATE)";
-                            SqlDbType[] types = { SqlDbType.Int, SqlDbType.Int,SqlDbType.DateTime };//数据类型
-                            string[] keys = { "@ID", "@SID","@DATE"};//上面写的参数名
+                            SqlDbType[] types = { SqlDbType.Int, SqlDbType.Int, SqlDbType.DateTime };//数据类型
+                            string[] keys = { "@ID", "@SID", "@DATE" };//上面写的参数名
 
                             values.Add(pickupID);
                             values.Add(item.UID);
@@ -283,7 +282,7 @@ namespace LPS.Forms.Order
                         int pid = (int)Database.Query(com);
                         com = string.Format("SELECT Num_of_product FROM Sales_order WHERE Sales_batch_id_FK={0}", item.Sale_NO);
                         int np = (int)Database.Query(com);
-                        com = string.Format("SELECT Product_category from Product_information WHERE Product_id_FK={0}",pid);
+                        com = string.Format("SELECT Product_category from Product_information WHERE Product_id_FK={0}", pid);
                         char pc = (char)Database.Query(com);
                         com = string.Format("SELECT Product_name from Product_information WHERE Product_id_FK={0}", pid);
                         char pn = (char)Database.Query(com);
@@ -295,8 +294,8 @@ namespace LPS.Forms.Order
                             string comInsert = "INSERT INTO" + tableName + "(Pick_up_order_informatin_id_PK,Pick_up_order_id_FK,Product_id_FK," +
                                 "Product_category,Product_name,Product_modle,Num_of_product)" +
                                 "value(@INFOID,@ID,@PID,@PC,@PN,@PM,@NP)";
-                            SqlDbType[] types = { SqlDbType.Int, SqlDbType.Int, SqlDbType.Char, SqlDbType.Char, SqlDbType.Char,SqlDbType.Char, SqlDbType.Int};//数据类型
-                            string[] keys = { "@INFOID", "@ID", "@PID","@PC", "@PN", "@PM", "@NP" };//上面写的参数名
+                            SqlDbType[] types = { SqlDbType.Int, SqlDbType.Int, SqlDbType.Char, SqlDbType.Char, SqlDbType.Char, SqlDbType.Char, SqlDbType.Int };//数据类型
+                            string[] keys = { "@INFOID", "@ID", "@PID", "@PC", "@PN", "@PM", "@NP" };//上面写的参数名
                             values.Add(pickupInfoID);
                             values.Add(pickupID);
                             values.Add(pid);

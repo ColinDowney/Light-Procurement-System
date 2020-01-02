@@ -49,14 +49,14 @@ namespace LPS.Manager
             if (re <= 0)
                 throw new Exception("Error occur when updating '" + Order_id.ToString() + "' in Order form.");
 
-            if (NewStatus == "审核通过")
-            {
-                command = string.Format("UPDATE Order_information SET Order_information_Status='{0}' WHERE Order_form_id_FK={1}",
-    1, Order_id);
-                re = Database.ExecuteSqlCommand(command);
-                if (re <= 0)
-                    throw new Exception("Error occur when updating '" + Order_id.ToString() + "' in Order_information form.");
-            }
+    //        if (NewStatus == "审核通过")
+    //        {
+    //            command = string.Format("UPDATE Order_information SET Order_information_Status='{0}' WHERE Order_form_id_FK={1}",
+    //1, Order_id);
+    //            re = Database.ExecuteSqlCommand(command);
+    //            if (re <= 0)
+    //                throw new Exception("Error occur when updating '" + Order_id.ToString() + "' in Order_information form.");
+    //        }
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace LPS.Manager
         /// <param name="Order_id">要更新的订单编号Order_id_PK</param>
         public static void UpdateRFQStatus(int Order_id)
         {
-            string command = string.Format("UPDATE RFQ SET RFQ_status='等待' WHERE Order_form_id_PK={0}", Order_id);
+            string command = string.Format("UPDATE RFQ SET RFQ_status='询价中' WHERE Order_form_id_PK={0}", Order_id);
             int re = Database.ExecuteSqlCommand(command);
             if (re <= 0)
                 throw new Exception("Error occur when updating '" + Order_id.ToString() + "' in RFQ form.");
@@ -295,7 +295,7 @@ namespace LPS.Manager
                     Notes = "";
                 string tableName = "RFQ";
                 string comInsert = "INSERT INTO " +
-                    tableName + "(RFQ_createdate, RFQ_status, RFQ_notes, Order_id_FK)" +
+                    tableName + "(RFQ_createdate, RFQ_status, RFQ_notes, Order_form_id_FK)" +
                     "values(@DATE, @STATUS, @NOTES, @ORDERID)";
                 SqlDbType[] types = { SqlDbType.DateTime, SqlDbType.VarChar, SqlDbType.VarChar, SqlDbType.Int };//数据类型
                 string[] keys = { "@DATE", "@STATUS", "@NOTES", "ORDERID" };//上面写的参数名
@@ -305,7 +305,7 @@ namespace LPS.Manager
                 bool returnVal = false;//判断是否成功执行
 
                 values.Add(System.DateTime.Now);
-                values.Add("等待");
+                values.Add("询价中");
                 values.Add(Notes);
                 values.Add(Order_id);
 
@@ -435,8 +435,11 @@ namespace LPS.Manager
                     {
                         temp = Database.Query("SELECT Supplier_password FROM Supplier_information WHERE Supplier_name='" + userid + "'");
                         uno = Database.Query("SELECT Supplier_id_PK FROM Supplier_information WHERE Supplier_name='" + userid + "'");
-                    }else
+                        if(temp==null)
                             throw new Exception("No such account.");
+                    }
+
+                            
                 }
                 string pw = (string)temp;
                 if (pw.Trim() != Tools.SecureStringToString(password))

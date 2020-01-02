@@ -32,8 +32,8 @@ namespace LPS.Forms.Pages
             {
                 if (Tools.CheckNumberSequence(CreateAccount_PhoneNumberText.Text) == false)
                     throw new Exception("Unvalid phone number.");
-                if (Tools.CheckNumberSequence(CreateAccount_PasswordText.Text) == false)
-                    throw new Exception("Unvalid supplier password.");
+                if (string.IsNullOrEmpty(CreateAccount_PasswordText.Password.Trim()))
+                    throw new Exception("请填写密码");
 
                 string comInsert = "INSERT INTO Supplier_information(Supplier_name, Supplier_phone, Supplier_password)" +
                     "values(@NAME, @PHONE, @PASSWORD)";//插入数据库的命令-（列名）+（参数名-自己起的）
@@ -47,7 +47,7 @@ namespace LPS.Forms.Pages
 
                 values.Add(CreateAccount_NameText.Text.Trim());
                 values.Add(CreateAccount_PhoneNumberText.Text.Trim());
-                values.Add(CreateAccount_PasswordText.Text.Trim());
+                values.Add(CreateAccount_PasswordText.Password.Trim());
                 for (int j = 0; j < values.Count; ++j)
                 {
                     //依次把三个参数放入字典中
@@ -75,7 +75,7 @@ namespace LPS.Forms.Pages
         private void clearInputField()
         {
             CreateAccount_NameText.Text = String.Empty;
-            CreateAccount_PasswordText.Text = String.Empty;
+            CreateAccount_PasswordText.Password = String.Empty;
             CreateAccount_PhoneNumberText.Text = String.Empty;
         }
     }

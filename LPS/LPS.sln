@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LPS", "LPS\LPS.csproj", "{53D2A5A3-2F47-431F-8E71-8BA41F58FFC2}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "LPS_Setup", "LPS_Setup\LPS_Setup.vdproj", "{161936E9-D7C9-4606-A193-0645D251826E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{53D2A5A3-2F47-431F-8E71-8BA41F58FFC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53D2A5A3-2F47-431F-8E71-8BA41F58FFC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53D2A5A3-2F47-431F-8E71-8BA41F58FFC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{161936E9-D7C9-4606-A193-0645D251826E}.Debug|Any CPU.ActiveCfg = Debug
+		{161936E9-D7C9-4606-A193-0645D251826E}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

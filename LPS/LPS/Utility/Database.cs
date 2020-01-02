@@ -13,7 +13,7 @@ using Microsoft.SqlServer.Management.Smo;
 namespace LPS.Utility
 {
     public static class Database
-    {//LAPTOP-G05DHBB3\\SQLEXPRESS
+    {//LAPTOP-G05DHBB3\\SQLEXPRESS    DESKTOP-E181GTL
         public static readonly string ServerName = "LAPTOP-G05DHBB3\\SQLEXPRESS";
         public static readonly string DefaultConnectionString = "server="+ServerName+";database=LPSDB;";//Integrated Security=true;
         public static readonly string DatabaseAddress = "server=" + ServerName + ";";
@@ -32,6 +32,17 @@ namespace LPS.Utility
             Password.AppendChar('2');
             Password.AppendChar('3');
             Password.AppendChar('4');
+
+            //UID = "sa";
+            //UNO = 1;
+            //Password.Clear();
+            //Password.AppendChar('9');
+            //Password.AppendChar('6');
+            //Password.AppendChar('3');
+            //Password.AppendChar('1');
+            //Password.AppendChar('2');
+            //Password.AppendChar('7');
+
         }
 
         private static void setUID(string uid)

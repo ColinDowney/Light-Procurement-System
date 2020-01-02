@@ -9,7 +9,7 @@
     <Grid>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="导出为Excel"/>
+                <MenuItem Name="Excel" Click="Excel_Click" Header="导出为Excel"/>
             </Menu>
 
 
@@ -116,11 +116,11 @@
                 <Button Grid.Column="5" Grid.Row="3"
                         />
 
-                <Button Grid.Column="5" Grid.Row="3">
+                <Button Name="Filter" Click="Filter_Click" Grid.Column="5" Grid.Row="3">
                     查询
                 </Button>
 
-                <Button Grid.Column="7" Grid.Row="3">
+                <Button Name="Clear" Click="Clear_Click" Grid.Column="7" Grid.Row="3">
                     清除
                 </Button>
 

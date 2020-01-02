@@ -139,8 +139,8 @@ namespace LPS.Forms.Order
                 AccountID.Visibility = Visibility.Hidden;
                 School.Visibility = Visibility.Hidden;
                 OrderAuditSchoolCombobox.Visibility = Visibility.Hidden;
-                OrderAuditNOInput.Visibility = Visibility.Hidden;
                 SendMessageBox.Visibility = Visibility.Hidden;
+                OrderAuditUIDInput.Visibility = Visibility.Hidden;
 
             }
         }

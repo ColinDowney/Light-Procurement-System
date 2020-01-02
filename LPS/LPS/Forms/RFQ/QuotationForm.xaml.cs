@@ -91,7 +91,7 @@ namespace LPS.Forms.RFQ
 
             //初始化combobox里面的选项
             string command = "SELECT DISTINCT Product_category FROM " +
-                "RFQ_information WHERE RFQ_id_FK in  (SELECT RFQ_id_PK FROM RFQ WHERE RFQ_status='等待')";
+                "RFQ_information WHERE RFQ_id_FK in  (SELECT RFQ_id_PK FROM RFQ WHERE RFQ_status='询价中')";
             DataTable _dataTable = Database.FillDataTable(command);
             if (_dataTable != null)
             {
@@ -125,11 +125,11 @@ namespace LPS.Forms.RFQ
             {
                 //耗时操作
                 //查询等待处理的询价单
-                DataTable dataTable = Database.FillDataTable("SELECT * FROM RFQ WHERE RFQ_status='等待'");
+                DataTable dataTable = Database.FillDataTable("SELECT * FROM RFQ WHERE RFQ_status='询价中'");
                 foreach (DataRow row in dataTable.Rows)
                 {
                     MyItem tempItem = new MyItem((int)row["RFQ_id_PK"], (DateTime)row["RFQ_createdate"],
-                        (string)row["RFQ_notes"], false, (int)row["Order_id_FK"]);
+                        (string)row["RFQ_notes"], false, (int)row["Order_form_id_FK"]);
                     _cache.Add(tempItem);
                 }
                 //_cache.OrderByDescending<MyItem>
@@ -182,7 +182,7 @@ namespace LPS.Forms.RFQ
                 DataTable dataTable = Database.FillDataTable(
                     "SELECT Product_category, Product_name, Product_modle, Num_of_product,Order_information_form_id_PK,RFQ_id_PK " +
                     "FROM Order_information INNER JOIN RFQ ON " +
-                    "Order_information.Order_form_id_FK=RFQ.Order_id_FK WHERE RFQ_id_PK=" + info.NO);
+                    "Order_information.Order_form_id_FK=RFQ.Order_form_id_FK WHERE RFQ_id_PK=" + info.NO);
                 foreach (DataRow row in dataTable.Rows)
                 {
                     Info tempItem = new Info((string)row["Product_category"], (string)row["Product_name"],
@@ -229,11 +229,11 @@ namespace LPS.Forms.RFQ
                             Notes = QuotationNotesTextBox.Text.Trim();
                         string tableName = "Quotation";
                         string comInsert = "INSERT INTO " +
-                            tableName + "(Quotation_source, Supplier_id_FK, Quotation_createdate, Quotation_notes, RFQ_id_FK)" +
-                            "values(@SOURCE, @UID, @DATE, @NOTES, @RFQ)";
+                            tableName + "(Quotation_source, Supplier_id_FK, Quotation_createdate, Quotation_notes, RFQ_id_FK,Order_form_id_FK)" +
+                            "values(@SOURCE, @UID, @DATE, @NOTES, @RFQ,@ORDER)";
                         SqlDbType[] types = { SqlDbType.VarChar, SqlDbType.Int, SqlDbType.DateTime,
-                                SqlDbType.VarChar, SqlDbType.Int };//数据类型
-                        string[] keys = { "@SOURCE", "@UID", "@DATE", "@NOTES", "@RFQ" };//上面写的参数名
+                                SqlDbType.VarChar, SqlDbType.Int, SqlDbType.Int };//数据类型
+                        string[] keys = { "@SOURCE", "@UID", "@DATE", "@NOTES", "@RFQ","@ORDER" };//上面写的参数名
 
                         List<object> values = new List<object>();//用来临时存参数的
                         Dictionary<string, List<object>> parameters = new Dictionary<string, List<object>>();//用来传参的
@@ -244,6 +244,7 @@ namespace LPS.Forms.RFQ
                         values.Add(System.DateTime.Now);
                         values.Add(Notes);
                         values.Add(item.NO);
+                        values.Add(item.Order_id);
 
                         for (int j = 0; j < values.Count; ++j)
                         {

@@ -101,6 +101,7 @@ namespace LPS.Forms.RFQ
             _data.Clear();
             foreach (var i in _cache)
                 _data.Add(i);
+            if(QuotationDataGrid!=null)
             QuotationDataGrid.Items.Refresh();
         }
 
@@ -140,11 +141,11 @@ namespace LPS.Forms.RFQ
             {
                 //耗时操作
                 //查询等待处理的询价单
-                DataTable dataTable = Database.FillDataTable("SELECT * FROM RFQ WHERE RFQ_status='等待'");
+                DataTable dataTable = Database.FillDataTable("SELECT * FROM RFQ WHERE RFQ_status='询价中'");
                 foreach (DataRow row in dataTable.Rows)
                 {
                     RFQItem tempItem = new RFQItem((int)row["RFQ_id_PK"], (DateTime)row["RFQ_createdate"],
-                        (string)row["RFQ_notes"], (int)row["Order_id_FK"]);
+                        (string)row["RFQ_notes"], (int)row["Order_form_id_FK"]);
                     _cache.Add(tempItem);
                 }
                 //_cache.OrderByDescending<MyItem>
@@ -289,7 +290,7 @@ namespace LPS.Forms.RFQ
                     if (item.isSelected)
                     {
                         //更新RFQ的状态
-                        Database.ExecuteSqlCommand("UPDATE RFQ SET RFQ_status='关闭' WHERE RFQ_id_PK=" + item.RFQID);
+                        Database.ExecuteSqlCommand("UPDATE RFQ SET RFQ_status='询价完成' WHERE RFQ_id_PK=" + item.RFQID);
 
                         if (_info == null || _info.Count <= 0)
                         {
@@ -333,12 +334,12 @@ namespace LPS.Forms.RFQ
                         string tableName = "Sales_batch";
                         string comInsert = "INSERT INTO " +
                             tableName + "(Customer_id_FK, Order_form_id_FK, Source_of_goods, Admin_id_FK, Price_of_all, " +
-                            "createdate, Sales_batch_status, Sales_batch_notes)" +
-                            "values(@CUSTOMER, @ORDER, @SOURCE, @ADMIN, @PRICE, @DATE, @STATUS, @NOTES)";
+                            "createdate, Sales_batch_status, Sales_batch_notes,Supplier_id_FK)" +
+                            "values(@CUSTOMER, @ORDER, @SOURCE, @ADMIN, @PRICE, @DATE, @STATUS, @NOTES,@SUPPLIER)";
                         SqlDbType[] types = { SqlDbType.Int, SqlDbType.Int, SqlDbType.VarChar, SqlDbType.Int, SqlDbType.Money,
-                                    SqlDbType.DateTime, SqlDbType.VarChar, SqlDbType.VarChar};//数据类型
+                                    SqlDbType.DateTime, SqlDbType.VarChar, SqlDbType.VarChar,SqlDbType.Int,};//数据类型
                         string[] keys = { "@CUSTOMER", "@ORDER", "@SOURCE", "@ADMIN", "@PRICE",
-                                    "@DATE", "@STATUS", "@NOTES" };//上面写的参数名
+                                    "@DATE", "@STATUS", "@NOTES","@SUPPLIER" };//上面写的参数名
 
                         List<object> values = new List<object>();//用来临时存参数的
                         Dictionary<string, List<object>> parameters = new Dictionary<string, List<object>>();//用来传参的
@@ -346,12 +347,13 @@ namespace LPS.Forms.RFQ
                         int cid = (int)Database.Query("SELECT Customer_id_FK FROM Order_form WHERE Order_form_id_PK=" + orderid);
                         values.Add(cid);
                         values.Add(orderid);
-                        values.Add("供货商");
+                        values.Add("供应商");
                         values.Add(Database.UNO);
                         values.Add(Total);
                         values.Add(System.DateTime.Now);
                         values.Add("未付款");
                         values.Add(Notes);
+                        values.Add(item.Supplier);
 
                         for (int j = 0; j < values.Count; ++j)
                         {
@@ -362,7 +364,7 @@ namespace LPS.Forms.RFQ
                         if (!returnVal)
                             throw new Exception("Error occur when inserting the Sales form.");
 
-                        //创建销售批次单
+                        //创建销售详单
                         int salesID = (int)Database.Query(string.Format("SELECT MAX(Sales_batch_id_PK) from {0}",
      tableName));
                         tableName = "Sales_order";

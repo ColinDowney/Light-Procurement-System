@@ -14,7 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+/*2*/
 namespace LPS.Forms.Order
 {
     /// <summary>
@@ -25,6 +25,7 @@ namespace LPS.Forms.Order
         private BackgroundWorker _demoBGWorker = new BackgroundWorker();
         private ObservableCollection<MyItem> _data { get; set; }
         private ObservableCollection<Info> _info { get; set; }
+        private int Order_information_id;
         public Order_to_supplier()
         {
             _demoBGWorker.DoWork += BGWorker_DoWork;
@@ -33,81 +34,102 @@ namespace LPS.Forms.Order
             InitializeComponent();
             for (int i = 0; i < ConstantValue.Order_formColName.Length; ++i)
             {
-                QuotationDataGrid.Columns[i].Header = ConstantValue.Sale_formColName[i];
+                OrderSupplierDataGrid.Columns[i].Header = ConstantValue.Sale_formColName[i];
             }
             for (int i = 0; i < ConstantValue.Order_informationColName.Length; ++i)
             {
-                QuotationInfoDataGrid.Columns[i].Header = ConstantValue.Sale_informationColName[i];
+                OrderSupplierInfoDataGrid.Columns[i].Header = ConstantValue.Sale_informationColName[i];
             }
         }
 
         /// <summary>
-        /// 展示Order_form绑定的数据模型
+        /// 展示Sale_form绑定的数据模型
         /// </summary>
         private class MyItem
         {
-            public int NO { get; set; }
-            public string QS { get; set; }
-            public string SID { get; set; }
-            public string Notes { get; set; }
+            public int Sale_NO { get; set; }
+            public int CID { get; set; }
+            public int OID { get; set; }
+            public string Product_Source { get; set; }
+            public int MID { get; set; }
+            public double Total_Price { get; set; }
+            public int SID { get; set; }
+            public string Date { get; set; }
+            public string Sale_State { get; set; }
+            public string Sale_Note { get; set; }
             public bool isSelected { get; set; }
 
-            public MyItem(int nO, string qs, string sid, string notes)
+
+            public MyItem(int nO, int cID, int oID, string product_Source,
+                int mID, double total_Price, int sID, string date, string sale_State, string sale_Note)
             {
-                NO = nO;
-                QS = qs;
-                SID = sid;
-                Notes = notes;
+                Sale_NO = nO;
+                CID = cID;
+                OID = oID;
+                Product_Source = product_Source;
+                MID = mID;
+                Total_Price = total_Price;
+                SID = sID;
+                Date = date;
+                Sale_State = sale_State;
+                Sale_Note = sale_Note;
                 isSelected = false;
             }
 
-            public void Set(int nO, string qs, string sid, string notes)
+            public void Set(int nO, int cID, int oID, string product_Source,
+                int mID, double total_Price, int sID, string date, string sale_State, string sale_Note)
             {
-                NO = nO;
-                QS = qs;
-                SID = sid;
-                Notes = notes;
+                Sale_NO = nO;
+                CID = cID;
+                OID = oID;
+                Product_Source = product_Source;
+                MID = mID;
+                Total_Price = total_Price;
+                SID = sID;
+                Date = date;
+                Sale_State = sale_State;
+                Sale_Note = sale_Note;
             }
         }
 
         /// <summary>
-        /// 展示Order_information绑定的数据模型
+        /// 展示Sale_information绑定的数据模型
         /// </summary>
         private class Info
         {
-            public string Category { get; set; }
-            public string Name { get; set; }
-            public string Modle { get; set; }
+            public int Sale_info_No { get; set; }
+            public int Product_No { get; set; }
+            public string PC { get; set; }
+            public string PN { get; set; }
+            public string PM { get; set; }
             public int Num { get; set; }
             public double Price { get; set; }
 
-            public Info(string category, string name, string modle, int num,double price)
+            public Info(int sale_info_No, int product_No, string pc, string pn, string pm, int num, double price)
             {
-                Category = category;
-                Name = name;
-                Modle = modle;
+                Sale_info_No = sale_info_No;
+                Product_No = product_No;
+                PC = pc;
+                PN = pn;
+                PM = pm;
                 Num = num;
                 Price = price;
             }
         }
+
         private void BGWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             _data = new ObservableCollection<MyItem>();//因为BGW不支持多线程 所以只能放这儿 也不太懂为什么
             _info = new ObservableCollection<Info>();
             try
             {
-
-                //从进货通知中获取待进货的信息
-                int order_form_id = (int)Database.Query("SELECT Order_form_id FROM Purchase_notice WHERE Purchase_notice_status='待进货'");
-                //获取到Order_form_id_FK报价单编号
-                string command = string.Format("SELECT * FROM Quotation WHERE Quotation_id_FK={0}", order_form_id);
-                //获取报价单和报价单单号
-                DataTable quotationTable = Database.FillDataTable(command);
-                int quotation_id = (int)Database.Query("SELECT Quotation_id_FK FROM Quotation");
                 //耗时操作
-                foreach (DataRow row in quotationTable.Rows)
+                DataTable dataTable = Database.FillDataTable("SELECT * FROM Purchase_notice INNER JOIN Sales_batch ON Sales_batch.Sales_batch_id_PK=Purchase_notice.Sales_batch_id_FK WHERE Purchase_notice_status='待进货'");
+                foreach (DataRow row in dataTable.Rows)
                 {
-                    MyItem tempItem = new MyItem((int)row["Quotation_id_PK"], (string)row["Quotation_source"],(string)row["Supplier_id_FK"], ((string)row["Quotation_notes"]).Trim());
+                    MyItem tempItem = new MyItem((int)row["Sales_batch_id_PK"], (int)row["Customer_id_FK"], (int)row["Order_form_id_FK"],
+                        ((string)row["Source_of_goods"]).Trim(), (int)row["Admin_id_FK"], (double)row["Price_of_all"], (int)row["Supplier_id_FK"], ((string)row["createdate"]).Trim(),
+                        ((string)row["Sales_batch_status"]).Trim(), ((string)row["Sales_batch_notes"]).Trim());
                     _data.Add(tempItem);
                 }
             }
@@ -125,8 +147,8 @@ namespace LPS.Forms.Order
         /// <param name="e"></param>
         private void BGWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            QuotationDataGrid.ItemsSource = _data;//因为BGW不支持多线程 所以只能放这儿 也不太懂为什么
-            QuotationInfoDataGrid.ItemsSource = _info;
+            OrderSupplierDataGrid.ItemsSource = _data;//因为BGW不支持多线程 所以只能放这儿 也不太懂为什么
+            OrderSupplierInfoDataGrid.ItemsSource = _info;
             //计算过程中的异常会被抓住，在这里可以进行处理。
             if (e.Error != null)
             {
@@ -136,7 +158,7 @@ namespace LPS.Forms.Order
         }
 
         /// <summary>
-        /// 在选中Quotation时在下面的DataGrid显示对应的订购详单
+        /// 在选中订购单时在下面的DataGrid显示对应的订购详单
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -154,12 +176,16 @@ namespace LPS.Forms.Order
                     DataGridRow grid = sender as DataGridRow;
                     info = grid.Item as MyItem;
                 }
-                //获取报价详细单
-                string command = string.Format("SELECT * FROM Quotation_information WHERE Quotation_id_FK={0}",info.NO);
-                DataTable quotationInfoTable = Database.FillDataTable(command);
-                foreach (DataRow row in quotationInfoTable.Rows)
+                string command;
+                DataTable tempTable;
+                DataTable dataTable = Database.FillDataTable(
+                    "SELECT Sales_order_id_PK,Product_id_FK, Price_of_product, Num FROM Sales_order WHERE Sales_batch_id_FK=" + info.Sale_NO);
+                foreach (DataRow row in dataTable.Rows)
                 {
-                    Info tempItem = new Info((string)row["Product_category"], (string)row["Product_name"], (string)row["Product_modle"], (int)row["Num_of_product"],(double)row["Price_of_product"]);
+                    command = string.Format("SELECT Product_category,Product_name,Product_modle FROM Product_information WHERE Product_id_PK={0}", row["Product_id_FK"]);
+                    tempTable = Database.FillDataTable(command);
+                    Info tempItem = new Info((int)row["Sales_order_id_PK"], (int)row["Product_id_FK"], ((string)tempTable.Rows[0].ItemArray[0]).Trim(),
+                        ((string)tempTable.Rows[0].ItemArray[1]).Trim(), ((string)tempTable.Rows[0].ItemArray[2]).Trim(), (int)row["Num"], (double)row["Price_of_product"]);
                     _info.Add(tempItem);
                 }
             }
@@ -172,26 +198,28 @@ namespace LPS.Forms.Order
 
         private void OrderFromSupplier_Click(object sender, RoutedEventArgs e)
         {
-            //Info info;
             List<object> values = new List<object>();//用来临时存参数的
             Dictionary<string, List<Object>> parameters1 = new Dictionary<string, List<object>>();
             Dictionary<string, List<Object>> parameters2 = new Dictionary<string, List<object>>();
             List<MyItem> toRemove = new List<MyItem>();
             try
             {
-                foreach (var i in QuotationDataGrid.Items)
+                foreach (var i in OrderSupplierDataGrid.Items)
                 {
                     MyItem item;
                     item = i as MyItem;
                     if (item.isSelected)
-                    {//获取报价详细单
-                        string com = string.Format("SELECT * FROM Quotation_information WHERE Quotation_id_FK={0}", item.NO);
-                        DataTable quotationInfoTable = Database.FillDataTable(com);
+                    {
+                        string com = string.Format("SELECT * FROM Sales_order WHERE Sales_order_id_PK={0}", item.Sale_NO);
+                        DataTable OrderSupplierInfoTable = Database.FillDataTable( com);
                         Info tempItem = null;
-                        foreach (DataRow row in quotationInfoTable.Rows)
+                        DataTable tempTable;
+                        foreach (DataRow row in OrderSupplierInfoTable.Rows)
                         {
-                            tempItem = new Info((string)row["Product_category"], (string)row["Product_name"], (string)row["Product_modle"], (int)row["Num_of_product"], (double)row["Price_of_product"]);
-                            _info.Add(tempItem);
+                            com = string.Format("SELECT Product_category,Product_name,Product_modle FROM Product_information WHERE Product_id_PK={0}", row["Product_id_FK"]);
+                            tempTable = Database.FillDataTable( com);
+                            tempItem = new Info((int)row["Sales_order_id_PK"], (int)row["Product_id_FK"], ((string)tempTable.Rows[0].ItemArray[0]).Trim(),
+                                ((string)tempTable.Rows[0].ItemArray[1]).Trim(), ((string)tempTable.Rows[0].ItemArray[2]).Trim(), (int)row["Num_of_product"], (double)row["Price_of_product"]);
                         }
                         string tableName = "Order_to_supplier";
                         com = string.Format("SELECT MAX(Order_form_to_supplier_id_PK) from {0}", tableName);
@@ -208,10 +236,9 @@ namespace LPS.Forms.Order
                             values.Add(orderID);
                             values.Add(item.SID);
                             values.Add(price_of_all);
-                            DateTime date = System.DateTime.Now;
+                            DateTime date = new DateTime();
                             values.Add(date);
-                            item.Notes = OrderToSupplierNotes.Text;
-                            values.Add(item.Notes);
+                            values.Add(OrderToSupplierNotes.Text);
                             bool returnVal1 = false;
                             for (int j = 0; j < values.Count; ++j)
                             {
@@ -222,7 +249,7 @@ namespace LPS.Forms.Order
 
                             if (!returnVal1)
                                 throw new Exception("Error occur when create the order form.");
-                            
+
 
                         }
                         catch (FormatException)
@@ -246,9 +273,9 @@ namespace LPS.Forms.Order
                             string[] keys = { "@INFOID", "@ID", "@PC", "@PN", "@PM", "@NP", "@PP" };//上面写的参数名
                             values.Add(supplierID);
                             values.Add(orderID);
-                            values.Add(tempItem.Category);
-                            values.Add(tempItem.Name);
-                            values.Add(tempItem.Modle);
+                            values.Add(tempItem.PC);
+                            values.Add(tempItem.PN);
+                            values.Add(tempItem.PM);
                             values.Add(tempItem.Num);
                             values.Add(tempItem.Price);
                             bool returnVal2 = false;
@@ -264,9 +291,6 @@ namespace LPS.Forms.Order
 
                             toRemove.Add(item);
 
-
-                            //MessageBox.Show("添加成功！");
-                            //clearInputField();
 
                         }
                         catch (FormatException)

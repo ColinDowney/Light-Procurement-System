@@ -20,13 +20,13 @@ namespace LPS
     /// </summary>
     public partial class Login : Window
     {
+        int type = 0;
 
-
-        public Login()
+        public Login(int Type)
         {
             InitializeComponent();
 
-
+            type = Type;
         }
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
@@ -42,12 +42,24 @@ namespace LPS
             if (Manager.Functions.Login(userid, password))
             {
                 MessageBox.Show("成功登陆");
-                MainMenu mu = new MainMenu();
-                mu.Show();
-                //CustomerMain cm = new CustomerMain();
-                //cm.Show();
-                //SupplierMain sm = new SupplierMain();
-                //sm.Show();
+                if (type == 1)
+                {
+                    CustomerMain cm = new CustomerMain();
+                    cm.Show();
+                }
+                else if (type == 2)
+                {
+                    SupplierMain sm = new SupplierMain();
+                    sm.Show();
+                }
+                else if (type == 3)
+                {
+                    MainMenu mu = new MainMenu();
+                    mu.Show();
+                }
+
+
+
                 this.Close();
             }
             else

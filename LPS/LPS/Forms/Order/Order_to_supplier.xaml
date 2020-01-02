@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Order_to_supplier" Height="450" Width="800">
     <Grid>
-        <DataGrid Name="QuotationDataGrid"
+        <DataGrid Name="OrderSupplierDataGrid"
                       IsReadOnly="False" AutoGenerateColumns="False" Margin="10,28,10,286.6">
             <DataGrid.ItemContainerStyle>
                 <Style TargetType="DataGridRow">
@@ -15,20 +15,27 @@
                 </Style>
             </DataGrid.ItemContainerStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Path=ID}" Width="80" IsReadOnly="True"/>
-                <DataGridTextColumn Binding="{Binding Path=UID}" Width="80" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Path=Sale_NO}" Width="80" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Path=CID}" Width="80" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Path=OID}" Width="80" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Path=Product_Source}" Width="80" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Path=MID}" Width="80" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Path=Total_Price}" Width="80" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Path=SID}" Width="80" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding Path=Date}" Width="80" IsReadOnly="True"/>
-                <DataGridTextColumn Binding="{Binding Path=State}" Width="100" IsReadOnly="True"/>
-                <DataGridTextColumn Binding="{Binding Path=Notes}" Width="150" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Path=Sale_State}" Width="100" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Path=Sale_Note}" Width="150" IsReadOnly="True"/>
                 <DataGridCheckBoxColumn Binding="{Binding Path=isSelected}" Width="30" x:Name="Check" IsReadOnly="False" />
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid Name="QuotationInfoDataGrid"
+        <DataGrid Name="OrderSupplierInfoDataGrid"
                       IsReadOnly="False" AutoGenerateColumns="False" Margin="10,164.8,10,57.4">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Path=Category}" Width="80" IsReadOnly="True"/>
-                <DataGridTextColumn Binding="{Binding Path=Name}" Width="80" IsReadOnly="True"/>
-                <DataGridTextColumn Binding="{Binding Path=Modle}" Width="80" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Path=Sale_info_NO}" Width="80" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Path=Product_No}" Width="80" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Path=PC}" Width="80" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Path=PN}" Width="80" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Path=PM}" Width="80" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding Path=Num}" Width="50" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding Path=Price}" Width="80" IsReadOnly="True"/>
             </DataGrid.Columns>

@@ -71,5 +71,8 @@ namespace LPS.Utility
 
         public static string[] OrderViewColName = { "单号", "供货商编号", "总价", "日期", "备注" };
         public static string[] OrderViewInfoColName = { "货品类别", "货品名称", "货品型号", "数量", "单价" };
+
+        public static string[] Order_to_supplier = { "订货单号", "供货商编号", "总价", "创建日期", "订货备注" };
+        public static string[] Order_to_supplier_information = { "货品类型", "货品名称", "货品型号", "数量", "单价" };
     }
 }

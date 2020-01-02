@@ -11,6 +11,60 @@ namespace LPS.Utility
 {
     public static class Tools
     {
+        public static void DataTableToExcel(System.Data.DataTable tmDataTable, string strFileName)
+        {
+            if (strFileName == null) { return; }
+            int RowNum = tmDataTable.Rows.Count;
+            int ColumnNum = tmDataTable.Columns.Count;
+            int RowIndex = 1;
+            int ColumnIndex = 0;
+            Microsoft.Office.Interop.Excel.Application xlapp = new Microsoft.Office.Interop.Excel.Application();           //打开Excel应用。
+            if (xlapp == null)
+                throw new Exception("未安装Excel。");
+            xlapp.DefaultFilePath = "";
+            xlapp.DisplayAlerts = true;
+            Microsoft.Office.Interop.Excel.Range range = null;//Excel的格式设置
+            Microsoft.Office.Interop.Excel.Workbooks workbooks = xlapp.Workbooks;
+            Microsoft.Office.Interop.Excel.Workbook workbook = workbooks.Add(Microsoft.Office.Interop.Excel.XlWBATemplate.xlWBATWorksheet);//创建一个Excel文件
+            Microsoft.Office.Interop.Excel.Worksheet worksheet = (Microsoft.Office.Interop.Excel.Worksheet)workbook.Worksheets[1];//拿到那个工作表 
+            foreach (DataColumn dc in tmDataTable.Columns)
+            {
+                ColumnIndex++;
+                worksheet.Cells[RowIndex, ColumnIndex] = dc.ColumnName;
+            }
+            for (int i = 0; i < RowNum; i++)
+            {
+                RowIndex++;
+                ColumnIndex = 0;
+                for (int j = 0; j < ColumnNum; j++)
+                {
+                    ColumnIndex++;
+                    range = (Microsoft.Office.Interop.Excel.Range)xlapp.Cells[RowIndex, ColumnIndex];
+                    range.NumberFormatLocal = "@";//写入到表中的数据格式以文本形式存在
+                    worksheet.Cells[RowIndex, ColumnIndex] = tmDataTable.Rows[i][j].ToString();
+                }
+            }
+            workbook.SaveCopyAs(strFileName);
+            //workbook.Close();//这里关闭会有Excel弹窗
+            // xlapp.Quit();
+            //KillExcel.KillExcelApp(xlapp);
+            KillExcelApp(xlapp);
+        }
+
+        [System.Runtime.InteropServices.DllImport("User32.dll")]
+        public static extern int GetWindowThreadProcessId(IntPtr hWnd, out int ProcessId);
+
+        public static void KillExcelApp(this Microsoft.Office.Interop.Excel.Application app)
+        {
+            app.Quit();
+            IntPtr intptr = new IntPtr(app.Hwnd);
+            int id;
+            GetWindowThreadProcessId(intptr, out id);
+            var p = System.Diagnostics.Process.GetProcessById(id);
+            //if (p != null)
+            p.Kill();
+        }
+
         public static bool checkLetters(string input)
         {
             string pattern = "([a-z]|[A-Z])+";
