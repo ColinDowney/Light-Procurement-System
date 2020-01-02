@@ -14,34 +14,34 @@ namespace LPS.Utility
 {
     public static class Database
     {//LAPTOP-G05DHBB3\\SQLEXPRESS    DESKTOP-E181GTL
-        public static readonly string ServerName = "DESKTOP-E181GTL";
-        public static readonly string DefaultConnectionString = "server="+ServerName+ ";database=LPSDBase2;";//Integrated Security=true;
+        public static readonly string ServerName = "DESKTOP-E181GTL";//Modified this
+        public static readonly string DefaultConnectionString = "server="+ServerName+ ";database="+ DatabaseName + ";";//Integrated Security=true;
         public static readonly string DatabaseAddress = "server=" + ServerName + ";";
         public static readonly string InstanceName = ServerName;
-        public static readonly string DatabaseName = "LPSDBase2";
+        public static readonly string DatabaseName = "LPSDB";//Modified this
         public static string UID = String.Empty;//for debug, it should be String.Empty;//登陆ID
         public static int UNO = -1;
         private static SecureString Password = new SecureString();//登陆密码
 
         public static void OnTest()
         {
-            //UID = "Colin";
-            //UNO = 1;
-            //Password.Clear();
-            //Password.AppendChar('1');
-            //Password.AppendChar('2');
-            //Password.AppendChar('3');
-            //Password.AppendChar('4');
-
-            UID = "sa";
+            UID = "Colin";
             UNO = 1;
             Password.Clear();
-            Password.AppendChar('9');
-            Password.AppendChar('6');
-            Password.AppendChar('3');
             Password.AppendChar('1');
             Password.AppendChar('2');
-            Password.AppendChar('7');
+            Password.AppendChar('3');
+            Password.AppendChar('4');
+
+            //UID = "sa";
+            //UNO = 1;
+            //Password.Clear();
+            //Password.AppendChar('9');
+            //Password.AppendChar('6');
+            //Password.AppendChar('3');
+            //Password.AppendChar('1');
+            //Password.AppendChar('2');
+            //Password.AppendChar('7');
 
         }
 

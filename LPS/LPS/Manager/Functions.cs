@@ -424,9 +424,7 @@ namespace LPS.Manager
                 Database.OnTest();
                 var temp = Database.Query("SELECT Admin_password FROM Admin_information WHERE Admin_name='" + userid + "'");
                 var uno = Database.Query("SELECT Admin_id_PK FROM Admin_information WHERE Admin_name='" + userid + "'");
-                string admin = "Colin";
-                SecureString pas = new SecureString();
-                pas.AppendChar('1');                pas.AppendChar('2');                pas.AppendChar('3');                pas.AppendChar('4');
+
                 if (temp == null)
                 {
                     temp = Database.Query("SELECT Customer_password FROM Customer_information WHERE Customer_contact='" + userid + "'");

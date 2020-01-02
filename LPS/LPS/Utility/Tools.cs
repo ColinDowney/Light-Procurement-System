@@ -11,6 +11,11 @@ namespace LPS.Utility
 {
     public static class Tools
     {
+        /// <summary>
+        /// 将数据表输出为Excel表格
+        /// </summary>
+        /// <param name="tmDataTable"></param>
+        /// <param name="strFileName"></param>
         public static void DataTableToExcel(System.Data.DataTable tmDataTable, string strFileName)
         {
             if (strFileName == null) { return; }
@@ -52,9 +57,9 @@ namespace LPS.Utility
         }
 
         [System.Runtime.InteropServices.DllImport("User32.dll")]
-        public static extern int GetWindowThreadProcessId(IntPtr hWnd, out int ProcessId);
+        private static extern int GetWindowThreadProcessId(IntPtr hWnd, out int ProcessId);
 
-        public static void KillExcelApp(this Microsoft.Office.Interop.Excel.Application app)
+        private static void KillExcelApp(this Microsoft.Office.Interop.Excel.Application app)
         {
             app.Quit();
             IntPtr intptr = new IntPtr(app.Hwnd);
@@ -65,6 +70,11 @@ namespace LPS.Utility
             p.Kill();
         }
 
+        /// <summary>
+        /// 判断字符串是否由字母组成
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static bool checkLetters(string input)
         {
             string pattern = "([a-z]|[A-Z])+";
@@ -72,6 +82,11 @@ namespace LPS.Utility
             return rgx.IsMatch(input);
         }
 
+        /// <summary>
+        /// SecureString与string的转换
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static String SecureStringToString(SecureString value)
         {
             IntPtr valuePtr = IntPtr.Zero;
