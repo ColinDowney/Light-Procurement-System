@@ -318,8 +318,6 @@ namespace LPS.Forms.Order
                 }
                 if (uid != "")
                 {
-                    if (!Tools.CheckNumberSequence(uid))
-                        throw new Exception("UID is invalid.");
                     _uid = Convert.ToInt32(uid);
                     u = true;
                 }
